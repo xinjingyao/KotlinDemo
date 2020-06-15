@@ -32,12 +32,18 @@ class MainActivity : AppCompatActivity() {
         for (i in 15 downTo 1 step 2) {
             println("--${fizzBuzz(i)}")
         }
+
+        println("--c是否在区间内：${isLetter('c')}")
+        println("--3是否不在区间内：${isNotDigit('3')}")
     }
 
     private fun testMax(a: Int, b: Int): Int {
         return if (a > b) a else b
     }
 
+    /**
+     * when带参数的用法
+     */
     private fun getColor(color: Color): String {
         return when (color) {
             Color.RED -> "红"
@@ -47,10 +53,23 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * when不带参数的用法
+     */
     private fun fizzBuzz(i: Int) = when {
         i % 15 == 0 -> "FizzBuzz "
         i % 3 == 0 -> "Fizz "
         i % 5 == 0 -> "Buzz "
         else -> "$i "
     }
+
+    /**
+     * in 检查是否在区间内
+     */
+    private fun isLetter(c: Char) = c in 'a'..'z' || c in 'A'..'Z'
+
+    /**
+     * !in 检查是否不在区间内
+     */
+    private fun isNotDigit(c: Char) = c !in '0'..'9'
 }
