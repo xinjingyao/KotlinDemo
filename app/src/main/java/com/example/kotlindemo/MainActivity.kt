@@ -15,9 +15,7 @@ class MainActivity : AppCompatActivity() {
 
         initData()
         // kotlin 不需要再findviewbyid了 直接调用即可
-        btn_login.setOnClickListener(View.OnClickListener {
-            LoginActivity.launch(this)
-        })
+        btn_login.setOnClickListener { LoginActivity.launch(this) }
     }
 
     private fun initData() {
@@ -43,6 +41,7 @@ class MainActivity : AppCompatActivity() {
 
         println("--c是否在区间内：${isLetter('c')}")
         println("--3是否不在区间内：${isNotDigit('3')}")
+        listTest()
     }
 
     private fun testMax(a: Int, b: Int): Int {
@@ -80,4 +79,14 @@ class MainActivity : AppCompatActivity() {
      * !in 检查是否不在区间内
      */
     private fun isNotDigit(c: Char) = c !in '0'..'9'
+
+    /**
+     * list 的创建和 list的新api
+     */
+    private fun listTest() {
+        val list = arrayListOf(1, 3, 5, 14, 7)
+        println("--list的值是$list")
+        println("--最后一个数字是${list.last()}")
+        println("--最大的数是${list.max()}")
+    }
 }
