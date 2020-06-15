@@ -1,7 +1,11 @@
 package com.example.kotlindemo
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.Button
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -10,6 +14,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         initData()
+        // kotlin 不需要再findviewbyid了 直接调用即可
+        btn_login.setOnClickListener(View.OnClickListener {
+            LoginActivity.launch(this)
+        })
     }
 
     private fun initData() {
