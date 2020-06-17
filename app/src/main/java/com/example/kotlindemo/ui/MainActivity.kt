@@ -1,10 +1,10 @@
-package com.example.kotlindemo
+package com.example.kotlindemo.ui
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.Button
+import com.example.kotlindemo.Color
+import com.example.kotlindemo.Person
+import com.example.kotlindemo.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {

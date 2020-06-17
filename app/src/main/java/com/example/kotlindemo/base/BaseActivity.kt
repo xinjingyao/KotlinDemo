@@ -2,10 +2,11 @@ package com.example.kotlindemo.base
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 
 abstract class BaseActivity<V : IView, P : BasePresenter<V>> : AppCompatActivity(), IView {
 
-    private var mPresenter: P? = null
+    protected var mPresenter: P? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +31,7 @@ abstract class BaseActivity<V : IView, P : BasePresenter<V>> : AppCompatActivity
     }
 
     override fun showToast(msg: String?) {
-        runOnUiThread {  }
+        runOnUiThread { Toast.makeText(this, msg, Toast.LENGTH_SHORT).show() }
     }
 
     override fun onDestroy() {
