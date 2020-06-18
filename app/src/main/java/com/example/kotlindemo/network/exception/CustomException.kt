@@ -1,5 +1,6 @@
 package network.exception
 
+import com.blankj.utilcode.util.LogUtils
 import com.google.gson.JsonParseException
 import java.net.ConnectException
 import java.net.SocketTimeoutException
@@ -36,6 +37,7 @@ class CustomException {
          * 将本地异常解析成ApiException
          */
         fun handleException(cause: Throwable?): ApiException? {
+            LogUtils.e("--handleException==$cause")
             var exception: ApiException? = null
             exception = if (cause is JsonParseException) {
                 ApiException(cause?.message, cause, PARSE_ERROR)

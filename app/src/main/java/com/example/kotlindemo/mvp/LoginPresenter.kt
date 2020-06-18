@@ -1,8 +1,8 @@
 package com.example.kotlindemo.mvp
 
+import com.example.kotlindemo.UserInfo
 import com.example.kotlindemo.base.BasePresenter
 import com.example.kotlindemo.listener.ModelListener
-import java.util.*
 
 class LoginPresenter: BasePresenter<LoginContract.ILoginView>() {
 
@@ -12,12 +12,12 @@ class LoginPresenter: BasePresenter<LoginContract.ILoginView>() {
     }
 
     fun login(account: String, pwd: String) {
-        loginModel?.login(account, pwd, object : ModelListener<String> {
+        val disposable = loginModel?.login(account, pwd, object : ModelListener<UserInfo> {
             override fun onResponse(
                 success: Boolean,
-                data: String,
-                errorMsg: String,
-                ext: Objects?
+                data: UserInfo?,
+                errorMsg: String?,
+                ext: Throwable?
             ) {
                 if (success)
                     mView?.loginSuccess()
@@ -25,5 +25,7 @@ class LoginPresenter: BasePresenter<LoginContract.ILoginView>() {
                     mView?.showToast(errorMsg)
             }
         })
+        addSubscription(disposable)
+
     }
 }

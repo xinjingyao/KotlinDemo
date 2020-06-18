@@ -1,5 +1,6 @@
 package network.request
 
+import com.example.kotlindemo.UserInfo
 import io.reactivex.Observable
 import network.response.Response
 import org.json.JSONObject
@@ -15,7 +16,7 @@ import retrofit2.http.Query
  */
 interface Request {
     companion object {
-        var HOST: String = "http://www.wanandroid.com/"
+        var HOST: String = "https://www.wanandroid.com/"
     }
 
 //    /**
@@ -33,24 +34,24 @@ interface Request {
 //    fun getBanner(): Observable<Response<List<BannerBean>>>
 //
 //
-//    /**
-//     * 用户登陆
-//     */
-//    @POST("user/login")
-//    fun userLogin(
-//            @Query("username") userName: String,
-//            @Query("password") password: String
-//    ): Observable<Response<LoginBean>>
-//
-//    /**
-//     * 用户注册
-//     */
-//    @POST("user/register")
-//    fun userRegister(
-//            @Query("username") userName: String,
-//            @Query("password") password: String,
-//            @Query("repassword") rePassword: String
-//    ): Observable<Response<JSONObject>>
+    /**
+     * 用户登陆
+     */
+    @POST("user/login")
+    fun userLogin(
+            @Query("username") userName: String,
+            @Query("password") password: String
+    ): Observable<Response<UserInfo>>
+
+    /**
+     * 用户注册
+     */
+    @POST("user/register")
+    fun userRegister(
+            @Query("username") userName: String,
+            @Query("password") password: String,
+            @Query("repassword") rePassword: String
+    ): Observable<Response<JSONObject>>
 //
 //    /**
 //     * 获取知识树
