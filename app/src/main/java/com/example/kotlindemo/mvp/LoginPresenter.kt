@@ -20,7 +20,7 @@ class LoginPresenter: BasePresenter<LoginContract.ILoginView>() {
                 ext: Throwable?
             ) {
                 if (success)
-                    mView?.loginSuccess()
+                    mView?.loginSuccess(data)
                 else
                     mView?.showToast(errorMsg)
             }

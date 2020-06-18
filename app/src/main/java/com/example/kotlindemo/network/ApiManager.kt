@@ -4,6 +4,7 @@ import com.example.kotlindemo.network.converter.GsonConverterFactory
 import com.mg.axechen.wanandroid.network.interceptor.AddCookieInterceptor
 import com.mg.axechen.wanandroid.network.interceptor.GetCookieInterceptor
 import network.request.Request
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 
 /**
@@ -44,7 +45,7 @@ class ApiManager private constructor() {
 
         // 初始化OKHTTP
         val client: okhttp3.OkHttpClient.Builder = okhttp3.OkHttpClient.Builder().apply {
-            addInterceptor(okhttp3.logging.HttpLoggingInterceptor())
+            addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             addInterceptor(AddCookieInterceptor())
             addInterceptor(GetCookieInterceptor())
         }

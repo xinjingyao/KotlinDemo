@@ -4,7 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.view.View
 import android.widget.Toast
+import com.blankj.utilcode.util.LogUtils
 import com.example.kotlindemo.R
+import com.example.kotlindemo.UserInfo
 import com.example.kotlindemo.base.BaseActivity
 import com.example.kotlindemo.mvp.LoginContract
 import com.example.kotlindemo.mvp.LoginPresenter
@@ -31,7 +33,8 @@ class LoginActivity : BaseActivity<LoginContract.ILoginView, LoginPresenter>(), 
         mPresenter?.login(et_account.text.toString(), et_pwd.text.toString())
     }
 
-    override fun loginSuccess() {
+    override fun loginSuccess(userInfo: UserInfo?) {
+        LogUtils.d("userInfo=$userInfo")
         showToast("登陆成功了")
     }
 

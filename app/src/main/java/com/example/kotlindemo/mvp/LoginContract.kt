@@ -10,7 +10,7 @@ interface LoginContract {
 
     interface ILoginView: IView {
 
-        fun loginSuccess()
+        fun loginSuccess(userInfo: UserInfo?)
     }
 
     interface ILoginModel: IModel {

@@ -1,6 +1,5 @@
 package com.example.kotlindemo.mvp
 
-import android.text.TextUtils
 import com.example.kotlindemo.UserInfo
 import com.example.kotlindemo.listener.ModelListener
 import com.mg.axechen.wanandroid.network.ApiManager
@@ -11,15 +10,24 @@ import network.schedules.SchedulerProvider
 class LoginModel : LoginContract.ILoginModel {
 
 
-    override fun login(account: String, pwd: String, listener: ModelListener<UserInfo>): Disposable? {
-        if (TextUtils.isEmpty(account)) {
-            listener.onResponse(false, null, "账号为空", null)
-            return null
+    override fun login(
+        account: String,
+        pwd: String,
+        listener: ModelListener<UserInfo>
+    ): Disposable? {
+
+        /**
+         * 这里可以抽出来一个局部函数
+         */
+        fun check(value: String, errorMsg: String) {
+            if (value.isEmpty()) {
+                listener.onResponse(false, null, errorMsg, null)
+                return
+            }
         }
-        if (TextUtils.isEmpty(pwd)) {
-            listener.onResponse(false, null, "密码为空", null)
-            return null
-        }
+
+        check(account, "账号为空")
+        check(pwd, "密码为空")
         return ApiManager.getInstance().getRequest()
             ?.userLogin(account, pwd)
             ?.compose(SchedulerProvider.getInstatnce()?.applySchedulers())
