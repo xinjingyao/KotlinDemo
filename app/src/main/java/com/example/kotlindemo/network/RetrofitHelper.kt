@@ -12,19 +12,19 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
  *
  * 网络请求管理类
  */
-class ApiManager private constructor() {
+class RetrofitHelper private constructor() {
 
     companion object {
-        var mManger: ApiManager? = null
+        var mManger: RetrofitHelper? = null
         var mRetrofit: retrofit2.Retrofit? = null
         var mRequest: Request? = null
 
         // 初始化NetWorkManager单例
-        fun getInstance(): ApiManager {
+        fun getInstance(): RetrofitHelper {
             if (mManger == null) {
-                synchronized(ApiManager::class) {
+                synchronized(RetrofitHelper::class) {
                     if (mManger == null) {
-                        mManger = ApiManager()
+                        mManger = RetrofitHelper()
                     }
                 }
             }

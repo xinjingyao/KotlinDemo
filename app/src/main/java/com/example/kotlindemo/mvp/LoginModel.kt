@@ -2,7 +2,7 @@ package com.example.kotlindemo.mvp
 
 import com.example.kotlindemo.UserInfo
 import com.example.kotlindemo.listener.ModelListener
-import com.mg.axechen.wanandroid.network.ApiManager
+import com.mg.axechen.wanandroid.network.RetrofitHelper
 import com.mg.axechen.wanandroid.network.response.ResponseTransformer
 import io.reactivex.disposables.Disposable
 import network.schedules.SchedulerProvider
@@ -28,7 +28,7 @@ class LoginModel : LoginContract.ILoginModel {
 
         check(account, "账号为空")
         check(pwd, "密码为空")
-        return ApiManager.getInstance().getRequest()
+        return RetrofitHelper.getInstance().getRequest()
             ?.userLogin(account, pwd)
             ?.compose(SchedulerProvider.getInstatnce()?.applySchedulers())
             ?.compose(ResponseTransformer.handleResult())
