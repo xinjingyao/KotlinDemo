@@ -37,7 +37,7 @@ class SplashActivity : BaseActivity<IView, EmptyPresenter>() {
                 }
 
                 override fun onAnimationEnd(animation: Animation?) {
-                    LoginActivity.launch(this@SplashActivity)
+                    MainActivity.launch(this@SplashActivity)
                     finish()
                 }
 
