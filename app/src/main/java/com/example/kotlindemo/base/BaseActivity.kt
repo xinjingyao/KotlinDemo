@@ -13,21 +13,24 @@ abstract class BaseActivity<V : IView, P : BasePresenter<V>> : AppCompatActivity
         setContentView(getLayoutId())
         mPresenter = getPresenter()
         mPresenter?.attachView(this as V)
+        initView()
         initData()
     }
+
 
     abstract fun getPresenter(): P
 
     abstract fun getLayoutId(): Int
 
+    open fun initView() {
+
+    }
     abstract fun initData()
 
     override fun showLoading(msg: String?) {
-        TODO("Not yet implemented")
     }
 
     override fun hideLoading() {
-        TODO("Not yet implemented")
     }
 
     override fun showToast(msg: String?) {
