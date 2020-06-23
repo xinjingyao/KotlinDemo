@@ -12,7 +12,7 @@ import com.example.kotlindemo.mvp.LoginContract
 import com.example.kotlindemo.mvp.LoginPresenter
 import kotlinx.android.synthetic.main.activity_login.*
 
-class LoginActivity : BaseActivity<LoginContract.ILoginView, LoginPresenter>(), View.OnClickListener , LoginContract.ILoginView{
+class LoginActivity : BaseActivity<LoginContract.ILoginView, LoginPresenter>(), LoginContract.ILoginView{
 
     companion object {
         fun launch(context: Context) {
@@ -25,13 +25,11 @@ class LoginActivity : BaseActivity<LoginContract.ILoginView, LoginPresenter>(), 
     override fun getLayoutId(): Int = R.layout.activity_login
 
     override fun initData() {
-        btn_login.setOnClickListener(this)
+        iv_back.setOnClickListener { finish() }
+        btn_login.setOnClickListener{mPresenter?.login(et_account.text.toString(), et_pwd.text.toString())}
+        tv_register.setOnClickListener { showToast("register") }
     }
 
-    override fun onClick(v: View?) {
-
-        mPresenter?.login(et_account.text.toString(), et_pwd.text.toString())
-    }
 
     override fun loginSuccess(userInfo: UserInfo?) {
         LogUtils.d("userInfo=$userInfo")

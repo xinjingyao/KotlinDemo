@@ -19,15 +19,16 @@ class LoginModel : LoginContract.ILoginModel {
         /**
          * 这里可以抽出来一个局部函数
          */
-        fun check(value: String, errorMsg: String) {
+        fun check(value: String, errorMsg: String): Boolean {
             if (value.isEmpty()) {
                 listener.onResponse(false, null, errorMsg, null)
-                return
+                return true
             }
+            return false
         }
 
-        check(account, "账号为空")
-        check(pwd, "密码为空")
+        if (check(account, "账号为空")) return null
+        if (check(pwd, "密码为空")) return null
         return RetrofitHelper.getInstance().getRequest()
             ?.userLogin(account, pwd)
             ?.compose(SchedulerProvider.getInstatnce()?.applySchedulers())

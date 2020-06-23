@@ -11,18 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <!-- toolBar-->
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_scrollFlags="scroll|enterAlways">
-
-            </androidx.appcompat.widget.Toolbar>
-        </com.google.android.material.appbar.AppBarLayout>
+        <include layout="@layout/toolbar"/>
         <!-- 内容-->
         <FrameLayout
             android:id="@+id/fl_container"

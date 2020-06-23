@@ -14,6 +14,7 @@ import com.example.kotlindemo.base.IView
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.nav_header.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 class MainActivity : BaseActivity<IView, EmptyPresenter>() {
 
@@ -85,7 +86,7 @@ class MainActivity : BaseActivity<IView, EmptyPresenter>() {
             tv_id = headerView.findViewById(R.id.tv_id)
             tv_level_rank = headerView.findViewById(R.id.tv_level_rank)
         }
-        tv_username?.setOnClickListener { showToast("tv_username") }
+        tv_username?.setOnClickListener { LoginActivity.launch(this) }
         iv_rank?.setOnClickListener { showToast("iv_rank") }
     }
 
