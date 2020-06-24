@@ -1,7 +1,10 @@
-package com.example.kotlindemo.mvp
+package com.example.kotlindemo.mvp.model
 
-import com.example.kotlindemo.UserInfo
+import com.blankj.utilcode.util.SPUtils
+import com.example.kotlindemo.mvp.model.entity.UserInfo
 import com.example.kotlindemo.listener.ModelListener
+import com.example.kotlindemo.mvp.LoginContract
+import com.example.kotlindemo.mvp.model.entity.UserScoreInfo
 import com.mg.axechen.wanandroid.network.RetrofitHelper
 import com.mg.axechen.wanandroid.network.response.ResponseTransformer
 import io.reactivex.disposables.Disposable
@@ -34,8 +37,12 @@ class LoginModel : LoginContract.ILoginModel {
             ?.compose(SchedulerProvider.getInstatnce()?.applySchedulers())
             ?.compose(ResponseTransformer.handleResult())
             ?.subscribe(
-                { t -> listener.onResponse(true, t, null, null) },
+                { t ->
+                    SPUtils.getInstance().put("user_id", t.id)
+                    listener.onResponse(true, t, null, null) },
                 { throwable -> listener.onResponse(false, null, throwable.message, throwable) }
             )
     }
+
+
 }

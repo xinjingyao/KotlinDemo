@@ -5,23 +5,31 @@ import android.content.Intent
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
+import com.blankj.utilcode.util.BusUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.StringUtils
+import com.example.kotlindemo.EVENT_SET_USER_INFO
 import com.example.kotlindemo.R
 import com.example.kotlindemo.base.BaseActivity
 import com.example.kotlindemo.base.EmptyPresenter
 import com.example.kotlindemo.base.IView
+import com.example.kotlindemo.mvp.MainContract
+import com.example.kotlindemo.mvp.model.entity.UserInfo
+import com.example.kotlindemo.mvp.model.entity.UserScoreInfo
+import com.example.kotlindemo.mvp.presenter.MainPresenter
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.nav_header.*
 import kotlinx.android.synthetic.main.toolbar.*
 
-class MainActivity : BaseActivity<IView, EmptyPresenter>() {
+class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), MainContract.IMainView {
 
     private var tv_username: TextView? = null
     private var tv_id: TextView? = null
     private var tv_level_rank: TextView? = null
     private var iv_rank: ImageView? = null
+
+    var userInfo: UserInfo? = null
 
     companion object{
         fun launch(context: Context) {
@@ -29,12 +37,13 @@ class MainActivity : BaseActivity<IView, EmptyPresenter>() {
         }
     }
 
-    override fun getPresenter(): EmptyPresenter = EmptyPresenter()
+    override fun getPresenter(): MainPresenter = MainPresenter()
 
     override fun getLayoutId(): Int = R.layout.activity_main
 
     override fun initView() {
         super.initView()
+        BusUtils.register(this)
         initToolbar()
         initDrawerLayout()
         initNavView()
@@ -100,5 +109,23 @@ class MainActivity : BaseActivity<IView, EmptyPresenter>() {
             R.id.nav_logout -> { showToast("nav_logout")}
         }
         true
+    }
+
+    @BusUtils.Bus(tag = EVENT_SET_USER_INFO, threadMode = BusUtils.ThreadMode.MAIN)
+    fun receiveUserInfo(userInfo: UserInfo) {
+        LogUtils.d("--receiveUserInfo")
+        this.userInfo = userInfo
+        tv_username?.text = userInfo.username
+        tv_id?.text = StringUtils.getString(R.string.nav_id, userInfo.id)
+        mPresenter?.getUserScoreInfo()
+    }
+
+    override fun showUserScore(userScoreInfo: UserScoreInfo?) {
+        tv_level_rank?.text = StringUtils.getString(R.string.nav_level_rank, userInfo?.type, userScoreInfo?.rank)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        BusUtils.unregister(this)
     }
 }

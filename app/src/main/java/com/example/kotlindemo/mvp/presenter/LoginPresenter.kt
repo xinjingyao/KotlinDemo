@@ -1,8 +1,11 @@
-package com.example.kotlindemo.mvp
+package com.example.kotlindemo.mvp.presenter
 
-import com.example.kotlindemo.UserInfo
+import com.example.kotlindemo.mvp.model.entity.UserInfo
 import com.example.kotlindemo.base.BasePresenter
 import com.example.kotlindemo.listener.ModelListener
+import com.example.kotlindemo.mvp.LoginContract
+import com.example.kotlindemo.mvp.model.LoginModel
+import com.example.kotlindemo.mvp.model.entity.UserScoreInfo
 
 class LoginPresenter: BasePresenter<LoginContract.ILoginView>() {
 
@@ -26,6 +29,6 @@ class LoginPresenter: BasePresenter<LoginContract.ILoginView>() {
             }
         })
         addSubscription(disposable)
-
     }
+
 }

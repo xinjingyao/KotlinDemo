@@ -2,14 +2,14 @@ package com.example.kotlindemo.ui
 
 import android.content.Context
 import android.content.Intent
-import android.view.View
-import android.widget.Toast
+import com.blankj.utilcode.util.BusUtils
 import com.blankj.utilcode.util.LogUtils
+import com.example.kotlindemo.EVENT_SET_USER_INFO
 import com.example.kotlindemo.R
-import com.example.kotlindemo.UserInfo
+import com.example.kotlindemo.mvp.model.entity.UserInfo
 import com.example.kotlindemo.base.BaseActivity
 import com.example.kotlindemo.mvp.LoginContract
-import com.example.kotlindemo.mvp.LoginPresenter
+import com.example.kotlindemo.mvp.presenter.LoginPresenter
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : BaseActivity<LoginContract.ILoginView, LoginPresenter>(), LoginContract.ILoginView{
@@ -20,7 +20,8 @@ class LoginActivity : BaseActivity<LoginContract.ILoginView, LoginPresenter>(), 
         }
     }
 
-    override fun getPresenter(): LoginPresenter = LoginPresenter()
+    override fun getPresenter(): LoginPresenter =
+        LoginPresenter()
 
     override fun getLayoutId(): Int = R.layout.activity_login
 
@@ -34,6 +35,7 @@ class LoginActivity : BaseActivity<LoginContract.ILoginView, LoginPresenter>(), 
     override fun loginSuccess(userInfo: UserInfo?) {
         LogUtils.d("userInfo=$userInfo")
         showToast("登陆成功了")
+        BusUtils.post(EVENT_SET_USER_INFO, userInfo)
     }
 
 }

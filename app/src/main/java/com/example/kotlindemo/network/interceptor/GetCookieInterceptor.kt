@@ -1,5 +1,6 @@
 package com.mg.axechen.wanandroid.network.interceptor
 
+import com.blankj.utilcode.util.SPUtils
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -60,9 +61,9 @@ class GetCookieInterceptor : Interceptor {
      */
     private fun saveCookie(url: String?, domain: String?, cookies: String) {
         url ?: return
-//        SharedPreferencesUtils.putString(url, cookies)
+        SPUtils.getInstance().put(url, cookies)
         domain ?: return
-//        SharedPreferencesUtils.putString(domain, cookies)
+        SPUtils.getInstance().put(domain, cookies)
     }
 
 }

@@ -1,6 +1,7 @@
 package network.request
 
-import com.example.kotlindemo.UserInfo
+import com.example.kotlindemo.mvp.model.entity.UserInfo
+import com.example.kotlindemo.mvp.model.entity.UserScoreInfo
 import io.reactivex.Observable
 import network.response.Response
 import org.json.JSONObject
@@ -52,6 +53,13 @@ interface Request {
             @Query("password") password: String,
             @Query("repassword") rePassword: String
     ): Observable<Response<JSONObject>>
+
+    /**
+     * 获取个人积分，需要登录后访问
+     * https://www.wanandroid.com/lg/coin/userinfo/json
+     */
+    @GET("/lg/coin/userinfo/json")
+    fun getUserScoreInfo(): Observable<Response<UserScoreInfo>>
 //
 //    /**
 //     * 获取知识树

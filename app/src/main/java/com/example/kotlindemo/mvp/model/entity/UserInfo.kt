@@ -1,4 +1,4 @@
-package com.example.kotlindemo
+package com.example.kotlindemo.mvp.model.entity
 
 
 data class UserInfo(
