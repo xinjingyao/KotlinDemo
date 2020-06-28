@@ -49,11 +49,9 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
         initNavView()
     }
 
-
-
     override fun initData() {
         LogUtils.d("--initData")
-
+        mPresenter?.getUserScoreInfo()
     }
 
     /**
@@ -121,7 +119,8 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
     }
 
     override fun showUserScore(userScoreInfo: UserScoreInfo?) {
-        tv_level_rank?.text = StringUtils.getString(R.string.nav_level_rank, userInfo?.type, userScoreInfo?.rank)
+        tv_level_rank?.text = StringUtils.getString(R.string.nav_level_rank, userScoreInfo?.level, userScoreInfo?.rank)
+        tv_id?.text = StringUtils.getString(R.string.nav_id, userScoreInfo?.userId)
     }
 
     override fun onDestroy() {
