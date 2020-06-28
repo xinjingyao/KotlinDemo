@@ -1,6 +1,7 @@
 package com.mg.axechen.wanandroid.network.interceptor
 
 import com.blankj.utilcode.util.SPUtils
+import com.example.kotlindemo.USER_ID
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -16,9 +17,9 @@ class AddCookieInterceptor : Interceptor {
         val request = chain?.request()
         val domain = request?.url()?.host()
         val builder = request?.newBuilder()
-        val userId = SPUtils.getInstance().getInt("user_id")
+        val userId = SPUtils.getInstance().getInt(USER_ID)
         if (domain!!.isNotEmpty() && userId != 0) {
-            var cookies = domain
+            var cookies = SPUtils.getInstance().getString(domain)
             if (cookies.isNotEmpty()) {
                 builder?.addHeader(COOKIE_NAME, cookies)
             }

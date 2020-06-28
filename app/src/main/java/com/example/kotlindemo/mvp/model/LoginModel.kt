@@ -1,6 +1,9 @@
 package com.example.kotlindemo.mvp.model
 
 import com.blankj.utilcode.util.SPUtils
+import com.example.kotlindemo.USER_EMAIL
+import com.example.kotlindemo.USER_ID
+import com.example.kotlindemo.USER_NAME
 import com.example.kotlindemo.mvp.model.entity.UserInfo
 import com.example.kotlindemo.listener.ModelListener
 import com.example.kotlindemo.mvp.LoginContract
@@ -38,8 +41,12 @@ class LoginModel : LoginContract.ILoginModel {
             ?.compose(ResponseTransformer.handleResult())
             ?.subscribe(
                 { t ->
-                    SPUtils.getInstance().put("user_id", t.id)
-                    listener.onResponse(true, t, null, null) },
+                    SPUtils.getInstance().put(USER_ID, t.id)//保存用户的姓名
+                    SPUtils.getInstance().put(USER_NAME, t.username!!)
+                    //保存用户的邮箱
+                    SPUtils.getInstance().put(USER_EMAIL, t.email!!)
+                    listener.onResponse(true, t, null, null)
+                },
                 { throwable -> listener.onResponse(false, null, throwable.message, throwable) }
             )
     }
