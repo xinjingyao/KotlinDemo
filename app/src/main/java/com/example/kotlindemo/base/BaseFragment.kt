@@ -18,8 +18,14 @@ abstract class BaseFragment<V : IView, P: IPresenter<V>>: Fragment(), IView {
         val view = inflater.inflate(getLayoutId(), container, false)
         mPresenter = createPresenter()
         mPresenter?.attachView(this as V)
+        initView()
+        initData()
         return view
     }
+
+    abstract fun initView()
+
+    abstract fun initData()
 
 
     abstract fun getLayoutId(): Int

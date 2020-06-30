@@ -1,18 +1,13 @@
-package com.example.kotlindemo.ui
+package com.example.kotlindemo.ui.activity
 
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
-import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.ImageUtils
-import com.blankj.utilcode.util.ScreenUtils
-import com.blankj.utilcode.util.SizeUtils
 import com.example.kotlindemo.R
 import com.example.kotlindemo.base.BaseActivity
-import com.example.kotlindemo.base.BasePresenter
 import com.example.kotlindemo.base.EmptyPresenter
 import com.example.kotlindemo.base.IView
 import kotlinx.android.synthetic.main.activity_splash.*
-import kotlin.math.log
 
 class SplashActivity : BaseActivity<IView, EmptyPresenter>() {
     override fun getPresenter(): EmptyPresenter {

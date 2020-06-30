@@ -1,11 +1,10 @@
-package com.example.kotlindemo.ui
+package com.example.kotlindemo.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.kotlindemo.Color
 import com.example.kotlindemo.Person
 import com.example.kotlindemo.R
-import kotlinx.android.synthetic.main.activity_main.*
 
 class TestActivity : AppCompatActivity() {
 

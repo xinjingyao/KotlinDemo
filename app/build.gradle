@@ -40,6 +40,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
     // 网络框架
     implementation "io.reactivex.rxjava2:rxjava:2.1.12"
@@ -49,5 +50,12 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1'
 
+    // 工具类
     implementation 'com.blankj:utilcodex:1.29.0'
+    // 多状态布局
+    implementation 'com.classic.common:multiple-status-view:1.7'
+    // brvah
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
+    // banner
+    implementation 'cn.bingoogolapple:bga-banner:3.0.0@aar'
 }

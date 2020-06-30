@@ -1,4 +1,4 @@
-package com.example.kotlindemo.ui
+package com.example.kotlindemo.ui.activity
 
 import android.content.Context
 import android.content.Intent

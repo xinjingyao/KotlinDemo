@@ -1,25 +1,24 @@
-package com.example.kotlindemo.ui
+package com.example.kotlindemo.ui.activity
 
 import android.content.Context
 import android.content.Intent
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.view.MenuItemCompat
 import com.blankj.utilcode.util.BusUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.StringUtils
 import com.example.kotlindemo.EVENT_SET_USER_INFO
 import com.example.kotlindemo.R
 import com.example.kotlindemo.base.BaseActivity
-import com.example.kotlindemo.base.EmptyPresenter
-import com.example.kotlindemo.base.IView
 import com.example.kotlindemo.mvp.MainContract
 import com.example.kotlindemo.mvp.model.entity.UserInfo
 import com.example.kotlindemo.mvp.model.entity.UserScoreInfo
 import com.example.kotlindemo.mvp.presenter.MainPresenter
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.nav_header.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), MainContract.IMainView {
@@ -28,10 +27,11 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
     private var tv_id: TextView? = null
     private var tv_level_rank: TextView? = null
     private var iv_rank: ImageView? = null
+    private var nav_score: TextView? = null
 
     var userInfo: UserInfo? = null
 
-    companion object{
+    companion object {
         fun launch(context: Context) {
             context.startActivity(Intent(context, MainActivity::class.java))
         }
@@ -45,6 +45,7 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
         super.initView()
         BusUtils.register(this)
         initToolbar()
+        initBottomNav()
         initDrawerLayout()
         initNavView()
     }
@@ -61,6 +62,15 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
         toolbar.run {
             title = StringUtils.getString(R.string.app_name)
             setSupportActionBar(this)
+        }
+    }
+
+    /**
+     * 初始化底部导航栏
+     */
+    private fun initBottomNav() {
+        bottom_nav.run {
+            setOnNavigationItemSelectedListener(onBottomNavigationItemSelectedListener)
         }
     }
 
@@ -92,22 +102,58 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
             tv_username = headerView.findViewById(R.id.tv_username)
             tv_id = headerView.findViewById(R.id.tv_id)
             tv_level_rank = headerView.findViewById(R.id.tv_level_rank)
+            nav_score =
+                MenuItemCompat.getActionView(nav_menu.menu.findItem(R.id.nav_score)) as TextView
         }
         tv_username?.setOnClickListener { LoginActivity.launch(this) }
         iv_rank?.setOnClickListener { showToast("iv_rank") }
     }
 
     private val onNavigationItemSelectedListener = NavigationView.OnNavigationItemSelectedListener {
-        when(it.itemId) {
-            R.id.nav_score -> { showToast("nav_score") }
-            R.id.nav_collect -> { showToast("nav_collect") }
-            R.id.nav_share -> { showToast("nav_share")}
-            R.id.nav_night_mode -> {showToast("nav_night_mode") }
-            R.id.nav_setting -> { showToast("nav_setting")}
-            R.id.nav_logout -> { showToast("nav_logout")}
+        when (it.itemId) {
+            R.id.nav_score -> {
+                showToast("nav_score")
+            }
+            R.id.nav_collect -> {
+                showToast("nav_collect")
+            }
+            R.id.nav_share -> {
+                showToast("nav_share")
+            }
+            R.id.nav_night_mode -> {
+                showToast("nav_night_mode")
+            }
+            R.id.nav_setting -> {
+                showToast("nav_setting")
+            }
+            R.id.nav_logout -> {
+                showToast("nav_logout")
+            }
         }
         true
     }
+
+    private val onBottomNavigationItemSelectedListener =
+        BottomNavigationView.OnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.action_home -> {
+                    true
+                }
+                R.id.action_square -> {
+                    true
+                }
+                R.id.action_wechat -> {
+                    true
+                }
+                R.id.action_system -> {
+                    true
+                }
+                R.id.action_project -> {
+                    true
+                }
+                else -> false
+            }
+        }
 
     @BusUtils.Bus(tag = EVENT_SET_USER_INFO, threadMode = BusUtils.ThreadMode.MAIN)
     fun receiveUserInfo(userInfo: UserInfo) {
@@ -119,8 +165,14 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
     }
 
     override fun showUserScore(userScoreInfo: UserScoreInfo?) {
-        tv_level_rank?.text = StringUtils.getString(R.string.nav_level_rank, userScoreInfo?.level, userScoreInfo?.rank)
+        tv_level_rank?.text = StringUtils.getString(
+            R.string.nav_level_rank,
+            userScoreInfo?.level,
+            userScoreInfo?.rank
+        )
         tv_id?.text = StringUtils.getString(R.string.nav_id, userScoreInfo?.userId)
+        tv_username?.text = userScoreInfo?.username
+        nav_score?.text = userScoreInfo?.coinCount.toString()
     }
 
     override fun onDestroy() {
