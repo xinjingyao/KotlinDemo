@@ -58,4 +58,7 @@ dependencies {
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
     // banner
     implementation 'cn.bingoogolapple:bga-banner:3.0.0@aar'
+    // glide
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 }

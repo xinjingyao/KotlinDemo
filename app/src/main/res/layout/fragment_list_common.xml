@@ -19,7 +19,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             style="@style/RecyclerViewStyle"
-            tools:listitem="@layout/item_blog" />
+            tools:listitem="@layout/item_article" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

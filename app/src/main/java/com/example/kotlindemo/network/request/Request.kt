@@ -1,7 +1,6 @@
 package network.request
 
-import com.example.kotlindemo.mvp.model.entity.UserInfo
-import com.example.kotlindemo.mvp.model.entity.UserScoreInfo
+import com.example.kotlindemo.mvp.model.entity.*
 import io.reactivex.Observable
 import network.response.Response
 import org.json.JSONObject
@@ -20,28 +19,34 @@ interface Request {
         var HOST: String = "https://www.wanandroid.com/"
     }
 
-//    /**
-//     * 获取主页文章
-//     */
-//    @GET("/article/list/{page}/json")
-//    fun getHomeList(
-//            @Path("page") page: Int
-//    ): Observable<Response<HomeListBean>>
-//
-//    /**
-//     * 获取首页banner数据
-//     */
-//    @GET("banner/json")
-//    fun getBanner(): Observable<Response<List<BannerBean>>>
-//
-//
+    /**
+     * 获取主页文章列表
+     */
+    @GET("/article/list/{page}/json")
+    fun getArticles(
+        @Path("page") page: Int
+    ): Observable<Response<ArticleResponse>>
+
+    /**
+     * 获取首页banner数据
+     */
+    @GET("banner/json")
+    fun getBanner(): Observable<Response<List<Banner>>>
+
+    /**
+     * 获取首页置顶文章列表
+     */
+    @GET("article/top/json")
+    fun getTopArticles(): Observable<Response<MutableList<Article>>>
+
+
     /**
      * 用户登陆
      */
     @POST("user/login")
     fun userLogin(
-            @Query("username") userName: String,
-            @Query("password") password: String
+        @Query("username") userName: String,
+        @Query("password") password: String
     ): Observable<Response<UserInfo>>
 
     /**
@@ -49,9 +54,9 @@ interface Request {
      */
     @POST("user/register")
     fun userRegister(
-            @Query("username") userName: String,
-            @Query("password") password: String,
-            @Query("repassword") rePassword: String
+        @Query("username") userName: String,
+        @Query("password") password: String,
+        @Query("repassword") rePassword: String
     ): Observable<Response<JSONObject>>
 
     /**
@@ -133,9 +138,11 @@ interface Request {
      * 收藏站外文章
      */
     @POST("lg/collect/add/json")
-    fun collectOutArticle(@Query("title") title: String,
-                          @Query("author") author: String,
-                          @Query("link") link: String): Observable<Response<JSONObject>>
+    fun collectOutArticle(
+        @Query("title") title: String,
+        @Query("author") author: String,
+        @Query("link") link: String
+    ): Observable<Response<JSONObject>>
 
     /**
      * 取消收藏
@@ -147,8 +154,10 @@ interface Request {
      * 收藏网站
      */
     @POST("lg/collect/addtool/json")
-    fun collectWebsite(@Query("name") name: String,
-                       @Query("link") link: String): Observable<Response<JSONObject>>
+    fun collectWebsite(
+        @Query("name") name: String,
+        @Query("link") link: String
+    ): Observable<Response<JSONObject>>
 
     /**
      * 取消网站收藏
@@ -160,7 +169,9 @@ interface Request {
      * 编辑收藏的网站
      */
     @POST("lg/collect/updatetool/json")
-    fun updateWebsite(@Query("id") id: String,
-                      @Query("name") name: String,
-                      @Query("link") link: String): Observable<Response<JSONObject>>
+    fun updateWebsite(
+        @Query("id") id: String,
+        @Query("name") name: String,
+        @Query("link") link: String
+    ): Observable<Response<JSONObject>>
 }

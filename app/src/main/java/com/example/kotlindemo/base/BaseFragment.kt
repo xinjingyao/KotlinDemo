@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.blankj.utilcode.util.ToastUtils
 
 abstract class BaseFragment<V : IView, P: IPresenter<V>>: Fragment(), IView {
 
@@ -15,12 +16,15 @@ abstract class BaseFragment<V : IView, P: IPresenter<V>>: Fragment(), IView {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(getLayoutId(), container, false)
+        return inflater.inflate(getLayoutId(), container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         mPresenter = createPresenter()
         mPresenter?.attachView(this as V)
         initView()
         initData()
-        return view
     }
 
     abstract fun initView()
@@ -32,15 +36,15 @@ abstract class BaseFragment<V : IView, P: IPresenter<V>>: Fragment(), IView {
     abstract fun createPresenter(): P
 
     override fun showLoading(msg: String?) {
-        TODO("Not yet implemented")
+
     }
 
     override fun hideLoading() {
-        TODO("Not yet implemented")
+
     }
 
     override fun showToast(msg: String?) {
-        TODO("Not yet implemented")
+        ToastUtils.showShort(msg)
     }
 
     override fun onDestroy() {

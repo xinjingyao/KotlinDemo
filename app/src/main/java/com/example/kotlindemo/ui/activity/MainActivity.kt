@@ -6,6 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.MenuItemCompat
+import androidx.fragment.app.FragmentTransaction
 import com.blankj.utilcode.util.BusUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.StringUtils
@@ -16,6 +17,7 @@ import com.example.kotlindemo.mvp.MainContract
 import com.example.kotlindemo.mvp.model.entity.UserInfo
 import com.example.kotlindemo.mvp.model.entity.UserScoreInfo
 import com.example.kotlindemo.mvp.presenter.MainPresenter
+import com.example.kotlindemo.ui.fragment.HomeFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -30,6 +32,13 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
     private var nav_score: TextView? = null
 
     var userInfo: UserInfo? = null
+    private val FRAGMENT_HOME = 0x01
+    private val FRAGMENT_SQUARE = 0x02
+    private val FRAGMENT_WECHAT = 0x03
+    private val FRAGMENT_SYSTEM = 0x04
+    private val FRAGMENT_PROJECT = 0x05
+    private var mHomeFragment: HomeFragment? = null
+    var mIndex: Int = FRAGMENT_HOME
 
     companion object {
         fun launch(context: Context) {
@@ -48,6 +57,7 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
         initBottomNav()
         initDrawerLayout()
         initNavView()
+        showFragment(mIndex)
     }
 
     override fun initData() {
@@ -154,6 +164,33 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
                 else -> false
             }
         }
+
+    private fun showFragment(index: Int) {
+        val transaction = supportFragmentManager.beginTransaction()
+        hideFragment(transaction)
+        mIndex = index
+        when (index) {
+            FRAGMENT_HOME -> {
+                toolbar.title = StringUtils.getString(R.string.app_name)
+                if (mHomeFragment == null) {
+                    mHomeFragment = HomeFragment.getInstance()
+                    transaction.add(R.id.fl_container, mHomeFragment!!, "home")
+                } else {
+                    transaction.show(mHomeFragment!!)
+                } }
+            FRAGMENT_SQUARE -> {}
+            FRAGMENT_WECHAT -> {}
+            FRAGMENT_SYSTEM -> {}
+            FRAGMENT_PROJECT -> {}
+        }
+        transaction.commit()
+    }
+
+
+    private fun hideFragment(transaction: FragmentTransaction) {
+        mHomeFragment?.let { transaction.hide(it) }
+
+    }
 
     @BusUtils.Bus(tag = EVENT_SET_USER_INFO, threadMode = BusUtils.ThreadMode.MAIN)
     fun receiveUserInfo(userInfo: UserInfo) {
