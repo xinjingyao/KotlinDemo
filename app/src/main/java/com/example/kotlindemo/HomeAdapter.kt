@@ -2,11 +2,12 @@ package com.example.kotlindemo
 
 import android.text.Html
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.example.kotlindemo.mvp.model.entity.Article
 
 class HomeAdapter(datas: MutableList<Article>?) :
-    BaseQuickAdapter<Article, BaseViewHolder>(R.layout.item_article, datas) {
+    BaseQuickAdapter<Article, BaseViewHolder>(R.layout.item_article, datas), LoadMoreModule {
 
     override fun convert(holder: BaseViewHolder, item: Article) {
 
@@ -29,9 +30,9 @@ class HomeAdapter(datas: MutableList<Article>?) :
         }
         holder.setText(R.id.tv_chapter, chapterName)
 
-        holder.setVisible(R.id.tv_tag_top, item.top == "1")
-            .setVisible(R.id.tv_tag_fresh, item.fresh)
-            .setVisible(R.id.tv_tag_issue, item.tags.size > 0)
+        holder.setGone(R.id.tv_tag_top, item.top != "1")
+            .setGone(R.id.tv_tag_fresh, !item.fresh)
+            .setGone(R.id.tv_tag_issue, item.tags.size <= 0)
             .setText(R.id.tv_tag_issue, if (item.tags.size > 0) item.tags[0].name else "")
     }
 }

@@ -74,7 +74,7 @@
             android:maxLines="2"
             android:lineSpacingExtra="@dimen/dp_2"
             android:gravity="top|start"
-            android:textSize="@dimen/sp_12"
+            android:textSize="@dimen/sp_16"
             android:textColor="@color/item_title"
             tools:text="@string/app_name"/>
 

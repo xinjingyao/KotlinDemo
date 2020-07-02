@@ -30,7 +30,8 @@
             android:background="@color/viewBackground"
             app:itemIconTint="@drawable/selector_bottom_nav_color"
             app:itemTextColor="@drawable/selector_bottom_nav_color"
-            app:menu="@menu/menu_bottom_nav" />
+            app:menu="@menu/menu_bottom_nav"
+            app:layout_behavior="com.example.kotlindemo.widget.BottomNavigationBehavior"/>
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

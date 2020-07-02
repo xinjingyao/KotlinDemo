@@ -50,6 +50,7 @@ class HomeModel : HomeContract.IHomeModel {
 
     override fun getHomeData(listener: ModelListener<ArticleResponse>): Disposable? {
         LogUtils.d("--getHomeData")
+        // zip 把两个接口请求的数据拼接成一个
          return Observable.zip(
             getTopArticlesApi(),
             getArticlesApi(0),

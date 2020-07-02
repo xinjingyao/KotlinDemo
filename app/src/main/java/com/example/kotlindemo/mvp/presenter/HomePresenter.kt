@@ -27,6 +27,7 @@ class HomePresenter : BasePresenter<HomeContract.IHomeView>() {
                 if (success) {
                     val imageList = ArrayList<String>()
                     val titleList = ArrayList<String>()
+                    // 检出图片和title
                     Observable.fromIterable(data)
                         .subscribe {
                             imageList.add(it.imagePath)

@@ -67,6 +67,7 @@ class HomeFragment : BaseFragment<HomeContract.IHomeView, HomePresenter>(), Home
                 // 加载banner
                 ImageLoader.load(context, feedImageUrl, imageView)
             }
+        // 这里必须findviewbyid 直接用banner无效
         bannerView?.findViewById<BGABanner>(R.id.banner)?.run {
             setDelegate { banner, itemView, model, position ->
                 //  banner的监听
@@ -92,10 +93,10 @@ class HomeFragment : BaseFragment<HomeContract.IHomeView, HomePresenter>(), Home
 
         homeAdapter.run {
             bannerView?.let { addHeaderView(it) }
-//            loadMoreModule.setOnLoadMoreListener {
-//                // TODO: 2020/6/30 加载更多
-//                showToast("加载更多")
-//            }
+            loadMoreModule.setOnLoadMoreListener {
+                // TODO: 2020/6/30 加载更多
+                showToast("加载更多")
+            }
             setOnItemClickListener { adapter, view, position ->
                 // TODO: 2020/6/30 点击item
             }
