@@ -1,9 +1,10 @@
-package com.example.kotlindemo
+package com.example.kotlindemo.adaper
 
 import android.text.Html
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import com.example.kotlindemo.R
 import com.example.kotlindemo.mvp.model.entity.Article
 
 class HomeAdapter(datas: MutableList<Article>?) :
@@ -34,5 +35,8 @@ class HomeAdapter(datas: MutableList<Article>?) :
             .setGone(R.id.tv_tag_fresh, !item.fresh)
             .setGone(R.id.tv_tag_issue, item.tags.size <= 0)
             .setText(R.id.tv_tag_issue, if (item.tags.size > 0) item.tags[0].name else "")
+
+        // 收藏可以点击
+        addChildClickViewIds(R.id.iv_like)
     }
 }

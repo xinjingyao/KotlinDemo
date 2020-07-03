@@ -6,7 +6,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.bingoogolapple.bgabanner.BGABanner
 import com.blankj.utilcode.util.LogUtils
-import com.example.kotlindemo.HomeAdapter
+import com.blankj.utilcode.util.ToastUtils
+import com.example.kotlindemo.adaper.HomeAdapter
 import com.example.kotlindemo.R
 import com.example.kotlindemo.base.BaseFragment
 import com.example.kotlindemo.mvp.HomeContract
@@ -24,7 +25,11 @@ class HomeFragment : BaseFragment<HomeContract.IHomeView, HomePresenter>(), Home
     private var bannerView: View? = null
 
     private val datas = mutableListOf<Article>()
-    private val homeAdapter: HomeAdapter by lazy { HomeAdapter(datas) }
+    private val homeAdapter: HomeAdapter by lazy {
+        HomeAdapter(
+            datas
+        )
+    }
     private var bannerAdapter: BGABanner.Adapter<ImageView, String>? = null
     private var banners: List<Banner>? = null
     private var isRefresh: Boolean = true
@@ -102,10 +107,13 @@ class HomeFragment : BaseFragment<HomeContract.IHomeView, HomePresenter>(), Home
                 mPresenter?.getArticles(page)
             }
             setOnItemClickListener { adapter, view, position ->
-                // TODO: 2020/6/30 点击item
+                //  点击item
+                ToastUtils.showShort("item")
             }
             setOnItemChildClickListener { adapter, view, position ->
-                // TODO: 2020/6/30 点击item的某一项
+                //  点击item的某一项
+                LogUtils.d("--onclick item child")
+                ToastUtils.showShort("like")
             }
         }
 
@@ -147,5 +155,6 @@ class HomeFragment : BaseFragment<HomeContract.IHomeView, HomePresenter>(), Home
     override fun showError(msg: String?) {
         super.showError(msg)
         swipeRefreshLayout.isRefreshing = false
+        LogUtils.d("---git")
     }
 }
