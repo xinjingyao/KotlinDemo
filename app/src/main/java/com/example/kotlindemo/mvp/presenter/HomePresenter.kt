@@ -10,14 +10,14 @@ import io.reactivex.Observable
 
 class HomePresenter : BasePresenter<HomeContract.IHomeView>() {
 
-    var homeModel: HomeModel? = null
+    private var homeModel: HomeModel? = null
 
     init {
         homeModel = HomeModel()
     }
 
     fun getHomeData() {
-        homeModel?.getBanner(object : ModelListener<List<Banner>> {
+        val banner = homeModel?.getBanner(object : ModelListener<List<Banner>> {
             override fun onResponse(
                 success: Boolean,
                 data: List<Banner>?,
@@ -35,11 +35,10 @@ class HomePresenter : BasePresenter<HomeContract.IHomeView>() {
                         }
                     mView?.showBanner(data, imageList, titleList)
                 } else
-                    mView?.showToast(errorMsg)
+                    mView?.showError(errorMsg)
             }
-
         })
-        homeModel?.getHomeData(object : ModelListener<ArticleResponse> {
+        val homeData = homeModel?.getHomeData(object : ModelListener<ArticleResponse> {
             override fun onResponse(
                 success: Boolean,
                 data: ArticleResponse?,
@@ -49,14 +48,15 @@ class HomePresenter : BasePresenter<HomeContract.IHomeView>() {
                 if (success)
                     mView?.showArticleList(data)
                 else
-                    mView?.showToast(errorMsg)
+                    mView?.showError(errorMsg)
             }
-
         })
+        addSubscription(banner)
+        addSubscription(homeData)
     }
 
     fun getArticles(page: Int) {
-        homeModel?.getArticles(page, object : ModelListener<ArticleResponse> {
+        val articles = homeModel?.getArticles(page, object : ModelListener<ArticleResponse> {
             override fun onResponse(
                 success: Boolean,
                 data: ArticleResponse?,
@@ -66,9 +66,9 @@ class HomePresenter : BasePresenter<HomeContract.IHomeView>() {
                 if (success)
                     mView?.showArticleList(data)
                 else
-                    mView?.showToast(errorMsg)
+                    mView?.showError(errorMsg)
             }
-
         })
+        addSubscription(articles)
     }
 }

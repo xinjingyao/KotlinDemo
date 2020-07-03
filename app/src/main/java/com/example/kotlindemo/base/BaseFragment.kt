@@ -44,7 +44,11 @@ abstract class BaseFragment<V : IView, P: IPresenter<V>>: Fragment(), IView {
     }
 
     override fun showToast(msg: String?) {
-        ToastUtils.showShort(msg)
+        activity?.runOnUiThread { ToastUtils.showShort(msg) }
+    }
+
+    override fun showError(msg: String?) {
+        activity?.runOnUiThread { ToastUtils.showShort(msg) }
     }
 
     override fun onDestroy() {

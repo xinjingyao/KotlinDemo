@@ -3,6 +3,7 @@ package com.example.kotlindemo.base
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.blankj.utilcode.util.ToastUtils
 
 abstract class BaseActivity<V : IView, P : BasePresenter<V>> : AppCompatActivity(), IView {
 
@@ -34,7 +35,11 @@ abstract class BaseActivity<V : IView, P : BasePresenter<V>> : AppCompatActivity
     }
 
     override fun showToast(msg: String?) {
-        runOnUiThread { Toast.makeText(this, msg, Toast.LENGTH_SHORT).show() }
+        runOnUiThread { ToastUtils.showShort(msg) }
+    }
+
+    override fun showError(msg: String?) {
+        runOnUiThread { ToastUtils.showShort(msg) }
     }
 
     override fun onDestroy() {

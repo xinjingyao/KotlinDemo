@@ -7,4 +7,6 @@ interface IView {
     fun hideLoading()
 
     fun showToast(msg: String?)
+
+    fun showError(msg: String?)
 }

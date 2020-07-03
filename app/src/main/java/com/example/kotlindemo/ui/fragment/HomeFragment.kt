@@ -45,6 +45,7 @@ class HomeFragment : BaseFragment<HomeContract.IHomeView, HomePresenter>(), Home
 
 
     override fun initData() {
+        swipeRefreshLayout.isRefreshing = true
         mPresenter?.getHomeData()
     }
 
@@ -55,9 +56,9 @@ class HomeFragment : BaseFragment<HomeContract.IHomeView, HomePresenter>(), Home
         swipeRefreshLayout.setOnRefreshListener {
             //  下拉刷新
             isRefresh = true
+            homeAdapter.loadMoreModule.isEnableLoadMore = false
             mPresenter?.getHomeData()
         }
-
     }
 
     private fun initBanner() {
@@ -94,8 +95,11 @@ class HomeFragment : BaseFragment<HomeContract.IHomeView, HomePresenter>(), Home
         homeAdapter.run {
             bannerView?.let { addHeaderView(it) }
             loadMoreModule.setOnLoadMoreListener {
-                // TODO: 2020/6/30 加载更多
-                showToast("加载更多")
+                // 加载更多
+                isRefresh = false
+                swipeRefreshLayout.isRefreshing = false
+                val page = data.size / 20
+                mPresenter?.getArticles(page)
             }
             setOnItemClickListener { adapter, view, position ->
                 // TODO: 2020/6/30 点击item
@@ -121,6 +125,7 @@ class HomeFragment : BaseFragment<HomeContract.IHomeView, HomePresenter>(), Home
     }
 
     override fun showArticleList(articleResponse: ArticleResponse?) {
+        swipeRefreshLayout.isRefreshing = false
         articleResponse?.datas?.let {
             if (isRefresh)
                 homeAdapter.setList(it)
@@ -139,4 +144,8 @@ class HomeFragment : BaseFragment<HomeContract.IHomeView, HomePresenter>(), Home
         }
     }
 
+    override fun showError(msg: String?) {
+        super.showError(msg)
+        swipeRefreshLayout.isRefreshing = false
+    }
 }
