@@ -6,8 +6,7 @@ import com.example.kotlindemo.USER_ID
 import com.example.kotlindemo.USER_NAME
 import com.example.kotlindemo.mvp.model.entity.UserInfo
 import com.example.kotlindemo.listener.ModelListener
-import com.example.kotlindemo.mvp.LoginContract
-import com.example.kotlindemo.mvp.model.entity.UserScoreInfo
+import com.example.kotlindemo.mvp.contract.LoginContract
 import com.mg.axechen.wanandroid.network.RetrofitHelper
 import com.mg.axechen.wanandroid.network.response.ResponseTransformer
 import io.reactivex.disposables.Disposable

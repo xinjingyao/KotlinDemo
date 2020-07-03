@@ -2,7 +2,7 @@ package com.example.kotlindemo.mvp.model
 
 import com.blankj.utilcode.util.LogUtils
 import com.example.kotlindemo.listener.ModelListener
-import com.example.kotlindemo.mvp.HomeContract
+import com.example.kotlindemo.mvp.contract.HomeContract
 import com.example.kotlindemo.mvp.model.entity.Article
 import com.example.kotlindemo.mvp.model.entity.ArticleResponse
 import com.example.kotlindemo.mvp.model.entity.Banner
@@ -14,7 +14,7 @@ import io.reactivex.functions.BiFunction
 import network.response.Response
 import network.schedules.SchedulerProvider
 
-class HomeModel : HomeContract.IHomeModel {
+class HomeModel : CommonModel(), HomeContract.IHomeModel {
 
     private fun getBannerApi(): Observable<Response<List<Banner>>>? {
         return RetrofitHelper.getInstance().getRequest()?.getBanner()
@@ -68,6 +68,6 @@ class HomeModel : HomeContract.IHomeModel {
                 { t -> listener.onResponse(true, t, null, null) },
                 { throwable -> listener.onResponse(false, null, throwable.message, throwable) }
             )
-
     }
+
 }

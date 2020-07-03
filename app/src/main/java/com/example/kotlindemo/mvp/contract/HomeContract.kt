@@ -1,17 +1,13 @@
-package com.example.kotlindemo.mvp
+package com.example.kotlindemo.mvp.contract
 
-import com.example.kotlindemo.base.IModel
-import com.example.kotlindemo.base.IView
 import com.example.kotlindemo.listener.ModelListener
 import com.example.kotlindemo.mvp.model.entity.ArticleResponse
 import com.example.kotlindemo.mvp.model.entity.Banner
-import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
-import network.response.Response
 
 interface HomeContract {
 
-    interface IHomeView: IView {
+    interface IHomeView: CommonContract.ICommonView {
         fun showBanner(
             banners: List<Banner>?,
             imageList: ArrayList<String>,
@@ -21,7 +17,7 @@ interface HomeContract {
         fun showArticleList(articleResponse: ArticleResponse?)
     }
 
-    interface IHomeModel: IModel{
+    interface IHomeModel: CommonContract.ICommonModel{
 
         /**
          * 获取banner数据

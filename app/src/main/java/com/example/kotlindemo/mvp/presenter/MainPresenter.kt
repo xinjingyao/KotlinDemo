@@ -2,7 +2,7 @@ package com.example.kotlindemo.mvp.presenter
 
 import com.example.kotlindemo.base.BasePresenter
 import com.example.kotlindemo.listener.ModelListener
-import com.example.kotlindemo.mvp.MainContract
+import com.example.kotlindemo.mvp.contract.MainContract
 import com.example.kotlindemo.mvp.model.MainModel
 import com.example.kotlindemo.mvp.model.entity.UserScoreInfo
 

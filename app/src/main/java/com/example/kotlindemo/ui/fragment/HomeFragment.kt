@@ -6,11 +6,12 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.bingoogolapple.bgabanner.BGABanner
 import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.example.kotlindemo.adaper.HomeAdapter
 import com.example.kotlindemo.R
 import com.example.kotlindemo.base.BaseFragment
-import com.example.kotlindemo.mvp.HomeContract
+import com.example.kotlindemo.mvp.contract.HomeContract
 import com.example.kotlindemo.mvp.model.entity.Article
 import com.example.kotlindemo.mvp.model.entity.ArticleResponse
 import com.example.kotlindemo.mvp.model.entity.Banner
@@ -113,10 +114,18 @@ class HomeFragment : BaseFragment<HomeContract.IHomeView, HomePresenter>(), Home
             setOnItemChildClickListener { adapter, view, position ->
                 //  点击item的某一项
                 LogUtils.d("--onclick item child")
-                ToastUtils.showShort("like")
+                if (datas.isEmpty()) return@setOnItemChildClickListener
+                val article = datas[position]
+                val collect = article.collect
+                article.collect = !collect
+                setData(position, article)
+                if (collect) {
+                    mPresenter?.cancelCollectArticle(article.id)
+                } else {
+                    mPresenter?.collectArticle(article.id)
+                }
             }
         }
-
     }
 
     override fun showBanner(
@@ -149,6 +158,18 @@ class HomeFragment : BaseFragment<HomeContract.IHomeView, HomePresenter>(), Home
             multiple_status_view?.showEmpty()
         } else {
             multiple_status_view?.showContent()
+        }
+    }
+
+    override fun showCollectResult(success: Boolean) {
+        if (success) {
+            showToast(StringUtils.getString(R.string.collect_success))
+        }
+    }
+
+    override fun showCancelCollectResult(success: Boolean) {
+        if (success) {
+            showToast(StringUtils.getString(R.string.cancel_collect_success))
         }
     }
 

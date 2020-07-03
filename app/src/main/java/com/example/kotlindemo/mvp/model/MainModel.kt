@@ -1,7 +1,7 @@
 package com.example.kotlindemo.mvp.model
 
 import com.example.kotlindemo.listener.ModelListener
-import com.example.kotlindemo.mvp.MainContract
+import com.example.kotlindemo.mvp.contract.MainContract
 import com.example.kotlindemo.mvp.model.entity.UserScoreInfo
 import com.mg.axechen.wanandroid.network.RetrofitHelper
 import com.mg.axechen.wanandroid.network.response.ResponseTransformer

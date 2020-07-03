@@ -1,4 +1,4 @@
-package com.example.kotlindemo.mvp
+package com.example.kotlindemo.mvp.contract
 
 import com.example.kotlindemo.base.IModel
 import com.example.kotlindemo.base.IView

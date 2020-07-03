@@ -8,7 +8,7 @@ import com.example.kotlindemo.EVENT_SET_USER_INFO
 import com.example.kotlindemo.R
 import com.example.kotlindemo.mvp.model.entity.UserInfo
 import com.example.kotlindemo.base.BaseActivity
-import com.example.kotlindemo.mvp.LoginContract
+import com.example.kotlindemo.mvp.contract.LoginContract
 import com.example.kotlindemo.mvp.presenter.LoginPresenter
 import kotlinx.android.synthetic.main.activity_login.*
 

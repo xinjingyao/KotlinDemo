@@ -13,7 +13,7 @@ import com.blankj.utilcode.util.StringUtils
 import com.example.kotlindemo.EVENT_SET_USER_INFO
 import com.example.kotlindemo.R
 import com.example.kotlindemo.base.BaseActivity
-import com.example.kotlindemo.mvp.MainContract
+import com.example.kotlindemo.mvp.contract.MainContract
 import com.example.kotlindemo.mvp.model.entity.UserInfo
 import com.example.kotlindemo.mvp.model.entity.UserScoreInfo
 import com.example.kotlindemo.mvp.presenter.MainPresenter

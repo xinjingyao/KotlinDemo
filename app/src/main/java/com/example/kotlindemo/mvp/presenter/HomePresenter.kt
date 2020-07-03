@@ -1,14 +1,13 @@
 package com.example.kotlindemo.mvp.presenter
 
-import com.example.kotlindemo.base.BasePresenter
 import com.example.kotlindemo.listener.ModelListener
-import com.example.kotlindemo.mvp.HomeContract
+import com.example.kotlindemo.mvp.contract.HomeContract
 import com.example.kotlindemo.mvp.model.HomeModel
 import com.example.kotlindemo.mvp.model.entity.ArticleResponse
 import com.example.kotlindemo.mvp.model.entity.Banner
 import io.reactivex.Observable
 
-class HomePresenter : BasePresenter<HomeContract.IHomeView>() {
+class HomePresenter : CommonPresenter<HomeContract.IHomeView>() {
 
     private var homeModel: HomeModel? = null
 
