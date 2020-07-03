@@ -16,6 +16,7 @@ import com.example.kotlindemo.mvp.model.entity.Article
 import com.example.kotlindemo.mvp.model.entity.ArticleResponse
 import com.example.kotlindemo.mvp.model.entity.Banner
 import com.example.kotlindemo.mvp.presenter.HomePresenter
+import com.example.kotlindemo.ui.activity.ContentActivity
 import com.example.kotlindemo.util.ImageLoader
 import com.example.kotlindemo.widget.SpaceItemDecoration
 import kotlinx.android.synthetic.main.fragment_list_common.*
@@ -109,7 +110,9 @@ class HomeFragment : BaseFragment<HomeContract.IHomeView, HomePresenter>(), Home
             }
             setOnItemClickListener { adapter, view, position ->
                 //  点击item
-                ToastUtils.showShort("item")
+                if (datas.isEmpty()) return@setOnItemClickListener
+                val article = datas[position]
+                ContentActivity.start(context, article.id, article.title, article.link)
             }
             setOnItemChildClickListener { adapter, view, position ->
                 //  点击item的某一项
