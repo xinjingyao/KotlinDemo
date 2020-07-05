@@ -2,8 +2,10 @@ package com.example.kotlindemo.ui.activity
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -13,10 +15,7 @@ import android.webkit.WebView
 import android.widget.LinearLayout
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.StringUtils
-import com.example.kotlindemo.ARTICLE_ID
-import com.example.kotlindemo.ARTICLE_TITLE
-import com.example.kotlindemo.ARTICLE_URL
-import com.example.kotlindemo.R
+import com.example.kotlindemo.*
 import com.example.kotlindemo.base.BaseActivity
 import com.example.kotlindemo.mvp.contract.EmptyContract
 import com.example.kotlindemo.mvp.presenter.EmptyPresenter
@@ -130,16 +129,30 @@ class ContentActivity : BaseActivity<EmptyContract.IEmptyView, EmptyPresenter>()
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_share -> {
-                showToast("action_share")
+                Intent().run {
+                    action = Intent.ACTION_SEND
+                    putExtra(
+                        Intent.EXTRA_TEXT, StringUtils.getString(
+                            R.string.share_article_url,
+                            StringUtils.getString(R.string.app_name), articleTitle, articleUrl
+                        )
+                    )
+                    type = CONTENT_SHARE_TYPE
+                    startActivity(Intent.createChooser(this, StringUtils.getString(R.string.action_share)))
+                }
             }
             R.id.action_collect -> {
                 mPresenter?.collectArticle(articleId)
             }
             R.id.action_browser -> {
-                showToast("action_browser")
+                Intent().run {
+                    action = "android.intent.action.VIEW"
+                    data = Uri.parse(articleUrl)
+                    startActivity(this)
+                }
             }
         }
-        return true
+        return super.onOptionsItemSelected(item)
     }
 
     override fun showCollectResult(success: Boolean) {
@@ -153,5 +166,33 @@ class ContentActivity : BaseActivity<EmptyContract.IEmptyView, EmptyPresenter>()
 
     override fun showCancelCollectResult(success: Boolean) {
 
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        mAgentWeb?.handleKeyEvent(keyCode, event)
+        return super.onKeyDown(keyCode, event)
+    }
+
+    override fun onBackPressed() {
+        mAgentWeb?.let {
+            if (!it.back()) {
+                super.onBackPressed()
+            }
+        }
+    }
+
+    override fun onResume() {
+        mAgentWeb?.webLifeCycle?.onResume()
+        super.onResume()
+    }
+
+    override fun onPause() {
+        mAgentWeb?.webLifeCycle?.onPause()
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        mAgentWeb?.webLifeCycle?.onDestroy()
+        super.onDestroy()
     }
 }
