@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.webkit.WebSettings
@@ -16,13 +18,17 @@ import com.example.kotlindemo.ARTICLE_TITLE
 import com.example.kotlindemo.ARTICLE_URL
 import com.example.kotlindemo.R
 import com.example.kotlindemo.base.BaseActivity
-import com.example.kotlindemo.base.EmptyPresenter
-import com.example.kotlindemo.base.IView
-import com.just.agentweb.*
+import com.example.kotlindemo.mvp.contract.EmptyContract
+import com.example.kotlindemo.mvp.presenter.EmptyPresenter
+import com.just.agentweb.AgentWeb
+import com.just.agentweb.DefaultWebClient
+import com.just.agentweb.NestedScrollAgentWebView
+import com.just.agentweb.WebChromeClient
 import kotlinx.android.synthetic.main.activity_content.*
 import kotlinx.android.synthetic.main.toolbar.*
 
-class ContentActivity : BaseActivity<IView, EmptyPresenter>() {
+class ContentActivity : BaseActivity<EmptyContract.IEmptyView, EmptyPresenter>(),
+    EmptyContract.IEmptyView {
 
     private var mAgentWeb: AgentWeb? = null
 
@@ -45,7 +51,8 @@ class ContentActivity : BaseActivity<IView, EmptyPresenter>() {
         }
     }
 
-    override fun getPresenter(): EmptyPresenter = EmptyPresenter()
+    override fun getPresenter(): EmptyPresenter =
+        EmptyPresenter()
 
     override fun getLayoutId(): Int = R.layout.activity_content
 
@@ -113,5 +120,38 @@ class ContentActivity : BaseActivity<IView, EmptyPresenter>() {
             super.onReceivedTitle(view, title)
             tv_title.text = title
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_toolbar, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_share -> {
+                showToast("action_share")
+            }
+            R.id.action_collect -> {
+                mPresenter?.collectArticle(articleId)
+            }
+            R.id.action_browser -> {
+                showToast("action_browser")
+            }
+        }
+        return true
+    }
+
+    override fun showCollectResult(success: Boolean) {
+        if (success) {
+            showToast(StringUtils.getString(R.string.collect_success))
+            // TODO: 2020/7/5  刷新主页收藏状态
+        } else {
+            showToast(StringUtils.getString(R.string.collect_failed))
+        }
+    }
+
+    override fun showCancelCollectResult(success: Boolean) {
+
     }
 }

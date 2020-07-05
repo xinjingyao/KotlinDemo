@@ -5,11 +5,12 @@ import android.view.animation.Animation
 import com.blankj.utilcode.util.ImageUtils
 import com.example.kotlindemo.R
 import com.example.kotlindemo.base.BaseActivity
-import com.example.kotlindemo.base.EmptyPresenter
+import com.example.kotlindemo.mvp.presenter.EmptyPresenter
 import com.example.kotlindemo.base.IView
+import com.example.kotlindemo.mvp.contract.EmptyContract
 import kotlinx.android.synthetic.main.activity_splash.*
 
-class SplashActivity : BaseActivity<IView, EmptyPresenter>() {
+class SplashActivity : BaseActivity<EmptyContract.IEmptyView, EmptyPresenter>() {
     override fun getPresenter(): EmptyPresenter {
         return EmptyPresenter()
     }
