@@ -28,9 +28,7 @@ class HomeFragment : BaseFragment<HomeContract.IHomeView, HomePresenter>(), Home
 
     private val datas = mutableListOf<Article>()
     private val homeAdapter: HomeAdapter by lazy {
-        HomeAdapter(
-            datas
-        )
+        HomeAdapter(datas)
     }
     private var bannerAdapter: BGABanner.Adapter<ImageView, String>? = null
     private var banners: List<Banner>? = null
@@ -82,7 +80,7 @@ class HomeFragment : BaseFragment<HomeContract.IHomeView, HomePresenter>(), Home
                 if (banners?.size!! > 0) {
                     var data = banners!![position]
                     LogUtils.d("--banner${data.title}")
-                    showToast(data?.title)
+                    ContentActivity.start(context, data.id, data.title, data.url)
                 }
             }
         }
