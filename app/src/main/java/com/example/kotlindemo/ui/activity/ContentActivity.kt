@@ -13,12 +13,14 @@ import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.widget.LinearLayout
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.StringUtils
 import com.example.kotlindemo.*
 import com.example.kotlindemo.base.BaseActivity
 import com.example.kotlindemo.mvp.contract.EmptyContract
 import com.example.kotlindemo.mvp.presenter.EmptyPresenter
+import com.google.android.material.appbar.AppBarLayout
 import com.just.agentweb.AgentWeb
 import com.just.agentweb.DefaultWebClient
 import com.just.agentweb.NestedScrollAgentWebView
@@ -84,7 +86,9 @@ class ContentActivity : BaseActivity<EmptyContract.IEmptyView, EmptyPresenter>()
 
     private fun initWebView() {
         val webView = NestedScrollAgentWebView(this)
-        val layoutParams = LinearLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT)
+        // 滑动web折叠toolbar
+        val layoutParams = CoordinatorLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT)
+        layoutParams.behavior = AppBarLayout.ScrollingViewBehavior()
         mAgentWeb = AgentWeb.with(this)
             //传入AgentWeb 的父控件
             .setAgentWebParent(container, 1, layoutParams)
@@ -128,6 +132,7 @@ class ContentActivity : BaseActivity<EmptyContract.IEmptyView, EmptyPresenter>()
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            android.R.id.home -> {onBackPressed()}
             R.id.action_share -> {
                 Intent().run {
                     action = Intent.ACTION_SEND
