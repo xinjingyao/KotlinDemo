@@ -19,6 +19,7 @@ import com.example.kotlindemo.mvp.model.entity.UserScoreInfo
 import com.example.kotlindemo.mvp.presenter.MainPresenter
 import com.example.kotlindemo.ui.fragment.HomeFragment
 import com.example.kotlindemo.ui.fragment.SquareFragment
+import com.example.kotlindemo.ui.fragment.WeChatFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -40,6 +41,7 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
     private val FRAGMENT_PROJECT = 0x05
     private var mHomeFragment: HomeFragment? = null
     private var mSquareFragment: SquareFragment? = null
+    private var mWeChatFragment: WeChatFragment? = null
     var mIndex: Int = FRAGMENT_HOME
 
     companion object {
@@ -157,6 +159,7 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
                     true
                 }
                 R.id.action_wechat -> {
+                    showFragment(FRAGMENT_WECHAT)
                     true
                 }
                 R.id.action_system -> {
@@ -193,6 +196,13 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
                 }
             }
             FRAGMENT_WECHAT -> {
+                toolbar.title = StringUtils.getString(R.string.wechat)
+                if (mWeChatFragment == null) {
+                    mWeChatFragment = WeChatFragment.getInstance()
+                    transaction.add(R.id.fl_container, mWeChatFragment!!, "wechat")
+                } else {
+                    transaction.show(mWeChatFragment!!)
+                }
             }
             FRAGMENT_SYSTEM -> {
             }
@@ -206,7 +216,7 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
     private fun hideFragment(transaction: FragmentTransaction) {
         mHomeFragment?.let { transaction.hide(it) }
         mSquareFragment?.let { transaction.hide(it) }
-
+        mWeChatFragment?.let { transaction.hide(it) }
     }
 
     @BusUtils.Bus(tag = EVENT_SET_USER_INFO, threadMode = BusUtils.ThreadMode.MAIN)

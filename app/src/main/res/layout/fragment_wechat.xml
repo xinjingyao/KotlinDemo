@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.classic.common.MultipleStatusView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/multiple_status_view"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:emptyView="@layout/custom_empty_view"
+    app:errorView="@layout/error_view"
+    app:loadingView="@layout/custom_loading_view"
+    app:noNetworkView="@layout/custom_no_network_view">
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        style="@style/MyTabLayoutStyle"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:tabGravity="center"
+        app:tabMode="scrollable"/>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tabLayout"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+
+</com.classic.common.MultipleStatusView>

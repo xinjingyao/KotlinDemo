@@ -73,6 +73,13 @@ interface Request {
      */
     @GET("user_article/list/{page}/json")
     fun getSquareList(@Path("page") page: Int): Observable<Response<ArticleResponse>>
+
+    /**
+     * 获取公众号列表
+     * http://wanandroid.com/wxarticle/chapters/json
+     */
+    @GET("/wxarticle/chapters/json")
+    fun getWXChapters(): Observable<Response<MutableList<WXChapterBean>>>
 //
 //    /**
 //     * 获取知识树
