@@ -152,6 +152,6 @@ class ArticleFragment : BaseFragment<ArticleContract.IArticleView, ArticlePresen
     override fun showError(msg: String?) {
         super.showError(msg)
         swipeRefreshLayout.isRefreshing = false
-        LogUtils.d("---git")
+        multiple_status_view.showError()
     }
 }

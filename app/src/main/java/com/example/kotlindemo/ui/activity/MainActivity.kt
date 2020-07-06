@@ -19,6 +19,7 @@ import com.example.kotlindemo.mvp.model.entity.UserScoreInfo
 import com.example.kotlindemo.mvp.presenter.MainPresenter
 import com.example.kotlindemo.ui.fragment.HomeFragment
 import com.example.kotlindemo.ui.fragment.SquareFragment
+import com.example.kotlindemo.ui.fragment.SystemFragment
 import com.example.kotlindemo.ui.fragment.WeChatFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
@@ -42,6 +43,7 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
     private var mHomeFragment: HomeFragment? = null
     private var mSquareFragment: SquareFragment? = null
     private var mWeChatFragment: WeChatFragment? = null
+    private var mSystemFragment: SystemFragment? = null
     var mIndex: Int = FRAGMENT_HOME
 
     companion object {
@@ -163,6 +165,7 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
                     true
                 }
                 R.id.action_system -> {
+                    showFragment(FRAGMENT_SYSTEM)
                     true
                 }
                 R.id.action_project -> {
@@ -205,6 +208,13 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
                 }
             }
             FRAGMENT_SYSTEM -> {
+                toolbar.title = StringUtils.getString(R.string.knowledge_system)
+                if (mSystemFragment == null) {
+                    mSystemFragment = SystemFragment.getInstance()
+                    transaction.add(R.id.fl_container, mSystemFragment!!, "system")
+                } else {
+                    transaction.show(mSystemFragment!!)
+                }
             }
             FRAGMENT_PROJECT -> {
             }
@@ -217,6 +227,7 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
         mHomeFragment?.let { transaction.hide(it) }
         mSquareFragment?.let { transaction.hide(it) }
         mWeChatFragment?.let { transaction.hide(it) }
+        mSystemFragment?.let { transaction.hide(it) }
     }
 
     @BusUtils.Bus(tag = EVENT_SET_USER_INFO, threadMode = BusUtils.ThreadMode.MAIN)

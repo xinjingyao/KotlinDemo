@@ -90,12 +90,12 @@ interface Request {
     @GET("article/list/{page}/json")
     fun getKnowledgeList(@Path("page") page: Int, @Query("cid") cid: Int): Observable<Response<ArticleResponse>>
 
-//
-//    /**
-//     * 获取知识树
-//     */
-//    @GET("tree/json")
-//    fun getKnowledgeTreeList(): Observable<Response<List<TreeBean>>>
+
+    /**
+     * 获取知识树
+     */
+    @GET("tree/json")
+    fun getKnowledgeTreeList(): Observable<Response<List<KnowledgeTree>>>
 //
 //
 //    /**
