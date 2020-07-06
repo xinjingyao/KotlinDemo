@@ -122,6 +122,7 @@ class ContentActivity : BaseActivity<EmptyContract.IEmptyView, EmptyPresenter>()
         override fun onReceivedTitle(view: WebView?, title: String?) {
             super.onReceivedTitle(view, title)
             tv_title.text = title
+            tv_title.isSelected = true
         }
     }
 

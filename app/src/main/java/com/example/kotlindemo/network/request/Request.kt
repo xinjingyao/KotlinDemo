@@ -65,6 +65,14 @@ interface Request {
      */
     @GET("/lg/coin/userinfo/json")
     fun getUserScoreInfo(): Observable<Response<UserScoreInfo>>
+
+    /**
+     * 广场列表数据
+     * https://wanandroid.com/user_article/list/0/json
+     * @param page 页码拼接在url上从0开始
+     */
+    @GET("user_article/list/{page}/json")
+    fun getSquareList(@Path("page") page: Int): Observable<Response<ArticleResponse>>
 //
 //    /**
 //     * 获取知识树

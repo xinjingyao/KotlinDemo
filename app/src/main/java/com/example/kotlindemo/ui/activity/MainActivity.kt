@@ -18,6 +18,7 @@ import com.example.kotlindemo.mvp.model.entity.UserInfo
 import com.example.kotlindemo.mvp.model.entity.UserScoreInfo
 import com.example.kotlindemo.mvp.presenter.MainPresenter
 import com.example.kotlindemo.ui.fragment.HomeFragment
+import com.example.kotlindemo.ui.fragment.SquareFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -38,6 +39,7 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
     private val FRAGMENT_SYSTEM = 0x04
     private val FRAGMENT_PROJECT = 0x05
     private var mHomeFragment: HomeFragment? = null
+    private var mSquareFragment: SquareFragment? = null
     var mIndex: Int = FRAGMENT_HOME
 
     companion object {
@@ -147,9 +149,11 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
         BottomNavigationView.OnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.action_home -> {
+                    showFragment(FRAGMENT_HOME)
                     true
                 }
                 R.id.action_square -> {
+                    showFragment(FRAGMENT_SQUARE)
                     true
                 }
                 R.id.action_wechat -> {
@@ -177,11 +181,23 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
                     transaction.add(R.id.fl_container, mHomeFragment!!, "home")
                 } else {
                     transaction.show(mHomeFragment!!)
-                } }
-            FRAGMENT_SQUARE -> {}
-            FRAGMENT_WECHAT -> {}
-            FRAGMENT_SYSTEM -> {}
-            FRAGMENT_PROJECT -> {}
+                }
+            }
+            FRAGMENT_SQUARE -> {
+                toolbar.title = StringUtils.getString(R.string.square)
+                if (mSquareFragment == null) {
+                    mSquareFragment = SquareFragment.getInstance()
+                    transaction.add(R.id.fl_container, mSquareFragment!!, "square")
+                } else {
+                    transaction.show(mSquareFragment!!)
+                }
+            }
+            FRAGMENT_WECHAT -> {
+            }
+            FRAGMENT_SYSTEM -> {
+            }
+            FRAGMENT_PROJECT -> {
+            }
         }
         transaction.commit()
     }
