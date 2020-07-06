@@ -205,6 +205,7 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
 
     private fun hideFragment(transaction: FragmentTransaction) {
         mHomeFragment?.let { transaction.hide(it) }
+        mSquareFragment?.let { transaction.hide(it) }
 
     }
 
