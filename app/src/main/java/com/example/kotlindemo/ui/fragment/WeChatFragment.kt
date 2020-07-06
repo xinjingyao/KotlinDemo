@@ -50,7 +50,7 @@ class WeChatFragment : BaseFragment<WeChatContract.IWeChatView, WeChatPresenter>
             datas.addAll(it)
             viewPager.run {
                 adapter = viewPagerAdapter
-                offscreenPageLimit = datas.size
+                offscreenPageLimit = 2 // viewpager往后预加载2个页面
             }
         }
         if (viewPagerAdapter.list.isEmpty()) {

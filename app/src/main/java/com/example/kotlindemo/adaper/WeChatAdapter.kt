@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.example.kotlindemo.mvp.model.entity.WXChapterBean
+import com.example.kotlindemo.ui.fragment.ArticleFragment
 
 class WeChatAdapter(val list: MutableList<WXChapterBean>, fragmentManager: FragmentManager): FragmentStatePagerAdapter(fragmentManager) {
 
@@ -13,7 +14,7 @@ class WeChatAdapter(val list: MutableList<WXChapterBean>, fragmentManager: Fragm
     init {
         fragments.clear()
         list.forEach {
-            fragments.add(Fragment())
+            fragments.add(ArticleFragment.getInstance(it.id))
         }
     }
 

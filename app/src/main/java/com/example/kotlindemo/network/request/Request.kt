@@ -80,6 +80,16 @@ interface Request {
      */
     @GET("/wxarticle/chapters/json")
     fun getWXChapters(): Observable<Response<MutableList<WXChapterBean>>>
+
+    /**
+     * 知识体系下的文章
+     * http://www.wanandroid.com/article/list/0/json?cid=168
+     * @param page
+     * @param cid
+     */
+    @GET("article/list/{page}/json")
+    fun getKnowledgeList(@Path("page") page: Int, @Query("cid") cid: Int): Observable<Response<ArticleResponse>>
+
 //
 //    /**
 //     * 获取知识树

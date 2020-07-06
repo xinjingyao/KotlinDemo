@@ -14,19 +14,21 @@ class WeChatPresenter : CommonPresenter<WeChatContract.IWeChatView>() {
     }
 
     fun getWXChapters() {
-        weChatModel?.getWXChapters(object : ModelListener<MutableList<WXChapterBean>>{
-            override fun onResponse(
-                success: Boolean,
-                data: MutableList<WXChapterBean>?,
-                errorMsg: String?,
-                ext: Throwable?
-            ) {
-                if (success)
-                    mView?.showWXChapters(data)
-                else
-                    mView?.showError(errorMsg)
-            }
+        val wxChapters =
+            weChatModel?.getWXChapters(object : ModelListener<MutableList<WXChapterBean>> {
+                override fun onResponse(
+                    success: Boolean,
+                    data: MutableList<WXChapterBean>?,
+                    errorMsg: String?,
+                    ext: Throwable?
+                ) {
+                    if (success)
+                        mView?.showWXChapters(data)
+                    else
+                        mView?.showError(errorMsg)
+                }
 
-        })
+            })
+        addSubscription(wxChapters)
     }
 }
