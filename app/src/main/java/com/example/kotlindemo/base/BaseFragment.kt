@@ -27,13 +27,12 @@ abstract class BaseFragment<V : IView, P: IPresenter<V>>: Fragment(), IView {
         initData()
     }
 
+    abstract fun getLayoutId(): Int
+    abstract fun createPresenter(): P
+
     abstract fun initView()
 
     abstract fun initData()
-
-
-    abstract fun getLayoutId(): Int
-    abstract fun createPresenter(): P
 
     override fun showLoading(msg: String?) {
 

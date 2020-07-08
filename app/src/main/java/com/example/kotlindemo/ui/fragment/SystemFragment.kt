@@ -39,9 +39,9 @@ class SystemFragment : BaseFragment<EmptyContract.IEmptyView, EmptyPresenter>(),
     override fun createPresenter(): EmptyPresenter = EmptyPresenter()
 
     override fun initView() {
-        // TODO: 2020/7/6 初始化fragmentList
+        // 初始化fragmentList
         fragmentList.add(KnowledgeTreeFragment())
-        fragmentList.add(Fragment())
+        fragmentList.add(NavFragment())
         initTabLayout()
         initViewPager()
     }

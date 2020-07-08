@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.classic.common.MultipleStatusView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/multiple_status_view"
+    android:background="@color/viewBackground"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:emptyView="@layout/custom_empty_view"
+    app:errorView="@layout/error_view"
+    app:loadingView="@layout/custom_loading_view"
+    app:noNetworkView="@layout/custom_no_network_view">
+
+    <q.rorbin.verticaltablayout.VerticalTabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="@dimen/dp_110"
+        android:layout_height="match_parent"
+        android:background="@color/vertical_tab_layout_bg"
+        app:indicator_color="@color/colorAccent"
+        app:indicator_gravity="left"
+        app:tab_mode="scrollable"
+        app:tab_margin="0dp"
+        app:tab_height="@dimen/dp_50"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_toRightOf="@+id/tabLayout"
+        style="@style/RecyclerViewStyle"/>
+
+
+
+</com.classic.common.MultipleStatusView>
