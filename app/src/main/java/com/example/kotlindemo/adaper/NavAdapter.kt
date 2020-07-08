@@ -1,9 +1,8 @@
 package com.example.kotlindemo.adaper
 
 import android.graphics.Color
-import android.view.ViewGroup
+import android.view.View
 import android.widget.FrameLayout
-import android.widget.LinearLayout
 import android.widget.TextView
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.LogUtils
@@ -11,39 +10,43 @@ import com.blankj.utilcode.util.SizeUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.example.kotlindemo.R
-import com.example.kotlindemo.mvp.model.entity.Article
 import com.example.kotlindemo.mvp.model.entity.NavBean
 import com.google.android.flexbox.FlexboxLayout
 import java.util.*
 
 class NavAdapter(datas: MutableList<NavBean>) :
-    BaseQuickAdapter<NavBean, BaseViewHolder>(R.layout.item_nav_desc, datas) {
+    BaseQuickAdapter<NavBean, NavAdapter.NavViewHolder>(R.layout.item_nav_desc, datas) {
 
-    private val viewList = mutableListOf<TextView>()
 
     @ExperimentalStdlibApi
-    override fun convert(holder: BaseViewHolder, item: NavBean) {
+    override fun convert(holder: NavViewHolder, item: NavBean) {
         holder.setText(R.id.tv_title, item.name)
+        // 利用官方的flexboxlayout控件实现流布局
         val flexboxLayout = holder.getView<FlexboxLayout>(R.id.fl_container)
-        if (item.articles.size > viewList.size) {
-            for (i in 1..item.articles.size - viewList.size) {
+        if (item.articles.size > holder.viewList.size) {
+            for (i in 1..item.articles.size - holder.viewList.size) {
                 val textView = createTextView()
-                viewList.add(textView)
+                holder.viewList.add(textView)
             }
-        } else if (item.articles.size < viewList.size) {
-            for (i in 1..viewList.size - item.articles.size) {
-                viewList.removeLast()
+        } else if (item.articles.size < holder.viewList.size) {
+            for (i in 1..holder.viewList.size - item.articles.size) {
+                holder.viewList.removeLast()
             }
         } else {
-
+            // 数量相等，暂不处理
         }
         val size = item.articles.size -1
-        LogUtils.d("--viewList.size=${viewList.size},  item.articles.size=${item.articles.size}")
+        LogUtils.d("--viewList.size=${holder.viewList.size},  item.articles.size=${item.articles.size}")
         for (i in 0..size) {
-            viewList[i].text = item.articles[i].title
+            holder.viewList[i].text = item.articles[i].title
         }
-//        flexboxLayout.removeAllViews()
-        viewList.forEach {
+        /*
+         在每次addView之前先全部移除view，避免
+         java.lang.IllegalStateException: The specified child already has a parent.
+         You must call removeView() on the child's parent first.
+         */
+        flexboxLayout.removeAllViews()
+        holder.viewList.forEach {
             flexboxLayout.addView(it)
         }
     }
@@ -70,6 +73,13 @@ class NavAdapter(datas: MutableList<NavBean>) :
         )
         textView.layoutParams = lp
         return textView
+    }
+
+    /**
+     * 自定义holder为了维护viewList
+     */
+    class NavViewHolder(view: View) : BaseViewHolder(view) {
+        val viewList = mutableListOf<TextView>()
     }
 
     /**
