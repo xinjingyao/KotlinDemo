@@ -17,10 +17,7 @@ import com.example.kotlindemo.mvp.contract.MainContract
 import com.example.kotlindemo.mvp.model.entity.UserInfo
 import com.example.kotlindemo.mvp.model.entity.UserScoreInfo
 import com.example.kotlindemo.mvp.presenter.MainPresenter
-import com.example.kotlindemo.ui.fragment.HomeFragment
-import com.example.kotlindemo.ui.fragment.SquareFragment
-import com.example.kotlindemo.ui.fragment.SystemFragment
-import com.example.kotlindemo.ui.fragment.WeChatFragment
+import com.example.kotlindemo.ui.fragment.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -44,6 +41,7 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
     private var mSquareFragment: SquareFragment? = null
     private var mWeChatFragment: WeChatFragment? = null
     private var mSystemFragment: SystemFragment? = null
+    private var mProjectFragment: ProjectFragment? = null
     var mIndex: Int = FRAGMENT_HOME
 
     companion object {
@@ -169,6 +167,7 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
                     true
                 }
                 R.id.action_project -> {
+                    showFragment(FRAGMENT_PROJECT)
                     true
                 }
                 else -> false
@@ -217,6 +216,13 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
                 }
             }
             FRAGMENT_PROJECT -> {
+                toolbar.title = StringUtils.getString(R.string.project)
+                if (mProjectFragment == null) {
+                    mProjectFragment = ProjectFragment.getInstance()
+                    transaction.add(R.id.fl_container, mProjectFragment!!, "project")
+                } else {
+                    transaction.show(mProjectFragment!!)
+                }
             }
         }
         transaction.commit()
@@ -228,6 +234,7 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
         mSquareFragment?.let { transaction.hide(it) }
         mWeChatFragment?.let { transaction.hide(it) }
         mSystemFragment?.let { transaction.hide(it) }
+        mProjectFragment?.let { transaction.hide(it) }
     }
 
     @BusUtils.Bus(tag = EVENT_SET_USER_INFO, threadMode = BusUtils.ThreadMode.MAIN)

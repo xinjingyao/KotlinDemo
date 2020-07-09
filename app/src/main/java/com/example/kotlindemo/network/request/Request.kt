@@ -96,21 +96,21 @@ interface Request {
      */
     @GET("tree/json")
     fun getKnowledgeTreeList(): Observable<Response<List<KnowledgeTree>>>
-//
-//
-//    /**
-//     * 获取项目树
-//     */
-//    @GET("project/tree/json")
-//    fun getProjectTree(): Observable<Response<List<TreeBean>>>
-//
-//
-//    /**
-//     * 根据项目分类id获取项目列表
-//     */
-//    @GET("project/list/{page}/json")
-//    fun getProjectListByCid(@Path("page") page: Int,
-//                            @Query("cid") cid: Int): Observable<Response<ProjectListBean>>
+
+
+    /**
+     * 获取项目树
+     */
+    @GET("project/tree/json")
+    fun getProjectTree(): Observable<Response<List<ProjectBean>>>
+
+
+    /**
+     * 根据项目分类id获取项目列表
+     */
+    @GET("project/list/{page}/json")
+    fun getProjectListByCid(@Path("page") page: Int,
+                            @Query("cid") cid: Int): Observable<Response<ProjectListBean>>
 //
 //    /**
 //     * 获取知识体系的文章
