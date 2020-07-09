@@ -7,15 +7,19 @@ import android.widget.TextView
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SizeUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.example.kotlindemo.R
 import com.example.kotlindemo.mvp.model.entity.NavBean
+import com.example.kotlindemo.ui.activity.ContentActivity
+import com.example.kotlindemo.util.SelectorUtils
 import com.google.android.flexbox.FlexboxLayout
 import java.util.*
 
 class NavAdapter(datas: MutableList<NavBean>) :
-    BaseQuickAdapter<NavBean, NavAdapter.NavViewHolder>(R.layout.item_nav_desc, datas) {
+    BaseQuickAdapter<NavBean, NavAdapter.NavViewHolder>(R.layout.item_nav_desc, datas), LoadMoreModule {
 
 
     @ExperimentalStdlibApi
@@ -35,10 +39,18 @@ class NavAdapter(datas: MutableList<NavBean>) :
         } else {
             // 数量相等，暂不处理
         }
-        val size = item.articles.size -1
+        val size = item.articles.size - 1
         LogUtils.d("--viewList.size=${holder.viewList.size},  item.articles.size=${item.articles.size}")
         for (i in 0..size) {
             holder.viewList[i].text = item.articles[i].title
+            holder.viewList[i].setOnClickListener {
+                ContentActivity.start(
+                    context,
+                    item.articles[i].id,
+                    item.articles[i].title,
+                    item.articles[i].link
+                )
+            }
         }
         /*
          在每次addView之前先全部移除view，避免
@@ -54,7 +66,11 @@ class NavAdapter(datas: MutableList<NavBean>) :
     private fun createTextView(): TextView {
         val textView = TextView(context)
         textView.setTextColor(randomColor())
-        textView.setBackgroundColor(ColorUtils.getColor(R.color.Grey100))
+        textView.background = SelectorUtils.getSelector(
+            ColorUtils.getColor(R.color.Grey100),
+            ColorUtils.getColor(R.color.Blue_Grey),
+            SizeUtils.dp2px(2f).toFloat()
+        )
         textView.setPadding(
             SizeUtils.dp2px(10f),
             SizeUtils.dp2px(6f),
