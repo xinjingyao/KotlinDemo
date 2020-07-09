@@ -43,7 +43,7 @@ class NavFragment : BaseFragment<NavContract.INavView, NavPresenter>(), NavContr
             }
 
             override fun onTabSelected(tab: TabView?, position: Int) {
-
+                recyclerView.smoothScrollToPosition(position)
             }
 
         })
