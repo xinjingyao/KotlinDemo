@@ -110,7 +110,7 @@ interface Request {
      */
     @GET("project/list/{page}/json")
     fun getProjectListByCid(@Path("page") page: Int,
-                            @Query("cid") cid: Int): Observable<Response<ProjectListBean>>
+                            @Query("cid") cid: Int): Observable<Response<ArticleResponse>>
 //
 //    /**
 //     * 获取知识体系的文章

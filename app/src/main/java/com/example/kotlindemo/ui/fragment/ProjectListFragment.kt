@@ -7,11 +7,11 @@ import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.StringUtils
 import com.example.kotlindemo.ARTICLE_CID
 import com.example.kotlindemo.R
-import com.example.kotlindemo.adaper.HomeAdapter
+import com.example.kotlindemo.adaper.ProjectListAdapter
 import com.example.kotlindemo.base.BaseFragment
 import com.example.kotlindemo.mvp.contract.ProjectListContract
 import com.example.kotlindemo.mvp.model.entity.Article
-import com.example.kotlindemo.mvp.model.entity.ProjectListBean
+import com.example.kotlindemo.mvp.model.entity.ArticleResponse
 import com.example.kotlindemo.mvp.presenter.ProjectListPresenter
 import com.example.kotlindemo.ui.activity.ContentActivity
 import com.example.kotlindemo.widget.SpaceItemDecoration
@@ -20,8 +20,8 @@ import kotlinx.android.synthetic.main.fragment_list_common.*
 class ProjectListFragment : BaseFragment<ProjectListContract.IProjectListView, ProjectListPresenter>(), ProjectListContract.IProjectListView {
 
     private val datas = mutableListOf<Article>()
-    private val homeAdapter: HomeAdapter by lazy {
-        HomeAdapter(datas)
+    private val projectAdapter: ProjectListAdapter by lazy {
+        ProjectListAdapter(datas)
     }
     private var isRefresh: Boolean = true
     private var cid = 0
@@ -59,7 +59,7 @@ class ProjectListFragment : BaseFragment<ProjectListContract.IProjectListView, P
         swipeRefreshLayout.setOnRefreshListener {
             //  下拉刷新
             isRefresh = true
-            homeAdapter.loadMoreModule.isEnableLoadMore = false
+            projectAdapter.loadMoreModule.isEnableLoadMore = false
             mPresenter?.getProjectListByCid(0, cid)
         }
     }
@@ -70,12 +70,12 @@ class ProjectListFragment : BaseFragment<ProjectListContract.IProjectListView, P
     private fun initRecyclerView() {
         recyclerView.run {
             layoutManager = LinearLayoutManager(context)
-            adapter = homeAdapter
+            adapter = projectAdapter
             itemAnimator = DefaultItemAnimator()
             addItemDecoration(SpaceItemDecoration(context))
         }
 
-        homeAdapter.run {
+        projectAdapter.run {
             loadMoreModule.setOnLoadMoreListener {
                 // 加载更多
                 isRefresh = false
@@ -106,20 +106,20 @@ class ProjectListFragment : BaseFragment<ProjectListContract.IProjectListView, P
         }
     }
 
-    override fun showProjectList(projectListBean: ProjectListBean?) {
+    override fun showProjectList(articleResponse: ArticleResponse?) {
         swipeRefreshLayout.isRefreshing = false
-        projectListBean?.datas?.let {
+        articleResponse?.datas?.let {
             if (isRefresh)
-                homeAdapter.setList(it)
+                projectAdapter.setList(it)
             else
-                homeAdapter.addData(it)
-            if (it.size < projectListBean.size) {
-                homeAdapter.loadMoreModule.loadMoreEnd(isRefresh)
+                projectAdapter.addData(it)
+            if (it.size < articleResponse.size) {
+                projectAdapter.loadMoreModule.loadMoreEnd(isRefresh)
             } else {
-                homeAdapter.loadMoreModule.loadMoreComplete()
+                projectAdapter.loadMoreModule.loadMoreComplete()
             }
         }
-        if (homeAdapter.data.isEmpty()) {
+        if (projectAdapter.data.isEmpty()) {
             multiple_status_view?.showEmpty()
         } else {
             multiple_status_view?.showContent()

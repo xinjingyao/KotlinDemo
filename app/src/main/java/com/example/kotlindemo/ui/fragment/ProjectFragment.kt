@@ -59,7 +59,7 @@ class ProjectFragment: BaseFragment<ProjectContract.IProjectView, ProjectPresent
         init {
             fragments.clear()
             projectTree.forEach {
-                fragments.add(Fragment())
+                fragments.add(ProjectListFragment.getInstance(it.id))
             }
         }
 
