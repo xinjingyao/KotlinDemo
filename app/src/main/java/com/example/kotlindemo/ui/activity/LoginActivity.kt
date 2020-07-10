@@ -12,7 +12,8 @@ import com.example.kotlindemo.mvp.contract.LoginContract
 import com.example.kotlindemo.mvp.presenter.LoginPresenter
 import kotlinx.android.synthetic.main.activity_login.*
 
-class LoginActivity : BaseActivity<LoginContract.ILoginView, LoginPresenter>(), LoginContract.ILoginView{
+class LoginActivity : BaseActivity<LoginContract.ILoginView, LoginPresenter>(),
+    LoginContract.ILoginView {
 
     companion object {
         fun launch(context: Context) {
@@ -27,14 +28,23 @@ class LoginActivity : BaseActivity<LoginContract.ILoginView, LoginPresenter>(), 
 
     override fun initData() {
         iv_back.setOnClickListener { finish() }
-        btn_login.setOnClickListener{mPresenter?.login(et_account.text.toString(), et_pwd.text.toString())}
-        tv_register.setOnClickListener { showToast("register") }
+        btn_login.setOnClickListener {
+            mPresenter?.login(
+                et_account.text.toString(),
+                et_pwd.text.toString()
+            )
+        }
+        tv_register.setOnClickListener {
+            RegisterActivity.launch(this)
+            finish()
+        }
     }
 
 
     override fun loginSuccess(userInfo: UserInfo?) {
         LogUtils.d("userInfo=$userInfo")
         showToast("登陆成功了")
+        finish()
         BusUtils.post(EVENT_SET_USER_INFO, userInfo)
     }
 

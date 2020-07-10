@@ -57,7 +57,7 @@ interface Request {
         @Query("username") userName: String,
         @Query("password") password: String,
         @Query("repassword") rePassword: String
-    ): Observable<Response<JSONObject>>
+    ): Observable<Response<UserInfo>>
 
     /**
      * 获取个人积分，需要登录后访问
