@@ -125,7 +125,7 @@ class ArticleFragment : BaseFragment<ArticleContract.IArticleView, ArticlePresen
             else
                 homeAdapter.addData(it)
             if (it.size < articleResponse.size) {
-                homeAdapter.loadMoreModule.loadMoreEnd(isRefresh)
+                homeAdapter.loadMoreModule.loadMoreEnd(false)
             } else {
                 homeAdapter.loadMoreModule.loadMoreComplete()
             }
