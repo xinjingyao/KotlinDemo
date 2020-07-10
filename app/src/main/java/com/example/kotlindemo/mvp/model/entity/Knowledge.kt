@@ -1,5 +1,7 @@
 package com.example.kotlindemo.mvp.model.entity
 
+import java.io.Serializable
+
 data class Knowledge(
     val children: List<Any>,
     val courseId: Int,
@@ -9,4 +11,4 @@ data class Knowledge(
     val parentChapterId: Int,
     val userControlSetTop: Boolean,
     val visible: Int
-)
+) : Serializable

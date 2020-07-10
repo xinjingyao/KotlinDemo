@@ -133,7 +133,6 @@ class ContentActivity : BaseActivity<EmptyContract.IEmptyView, EmptyPresenter>()
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            android.R.id.home -> {onBackPressed()}
             R.id.action_share -> {
                 Intent().run {
                     action = Intent.ACTION_SEND

@@ -2,6 +2,7 @@ package com.example.kotlindemo.base
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Toast
 import com.blankj.utilcode.util.ToastUtils
 
@@ -19,9 +20,9 @@ abstract class BaseActivity<V : IView, P : BasePresenter<V>> : AppCompatActivity
     }
 
 
-    abstract fun getPresenter(): P
-
     abstract fun getLayoutId(): Int
+
+    abstract fun getPresenter(): P
 
     open fun initView() {
 
@@ -40,6 +41,13 @@ abstract class BaseActivity<V : IView, P : BasePresenter<V>> : AppCompatActivity
 
     override fun showError(msg: String?) {
         runOnUiThread { ToastUtils.showShort(msg) }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> { onBackPressed() }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onDestroy() {

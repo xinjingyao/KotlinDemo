@@ -1,5 +1,7 @@
 package com.example.kotlindemo.mvp.model.entity
 
+import java.io.Serializable
+
 data class KnowledgeTree(
     val children: List<Knowledge>,
     val courseId: Int,
@@ -9,4 +11,4 @@ data class KnowledgeTree(
     val parentChapterId: Int,
     val userControlSetTop: Boolean,
     val visible: Int
-)
+) : Serializable

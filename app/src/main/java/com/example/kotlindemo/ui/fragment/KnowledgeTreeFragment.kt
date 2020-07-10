@@ -11,6 +11,7 @@ import com.example.kotlindemo.mvp.contract.KnowledgeTreeContract
 import com.example.kotlindemo.mvp.model.entity.KnowledgeTree
 import com.example.kotlindemo.mvp.presenter.KnowledgeTreePresenter
 import com.example.kotlindemo.ui.activity.ContentActivity
+import com.example.kotlindemo.ui.activity.KnowledgeActivity
 import com.example.kotlindemo.widget.SpaceItemDecoration
 import kotlinx.android.synthetic.main.fragment_list_common.*
 
@@ -67,8 +68,8 @@ class KnowledgeTreeFragment : BaseFragment<KnowledgeTreeContract.IKnowledgeTreeV
             setOnItemClickListener { adapter, view, position ->
                 //  点击item
                 if (datas.isEmpty()) return@setOnItemClickListener
-                val article = datas[position]
-                showToast("position=${position}")
+                val knowledgeTree = datas[position].children
+                activity?.let { KnowledgeActivity.start(it, datas[position].name, datas[position]) }
             }
         }
     }

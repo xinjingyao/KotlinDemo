@@ -9,3 +9,6 @@ const val ARTICLE_TITLE = "article_title"
 const val ARTICLE_URL = "article_url"
 const val CONTENT_SHARE_TYPE = "text/plain"
 const val ARTICLE_CID = "article_cid"
+
+const val TITLE = "title"
+const val KNOWLEDGE_LIST = "knowledge_list"
