@@ -1,9 +1,0 @@
-{
-  "BusUtilsClass": "com.blankj.utilcode.util.BusUtils",
-  "rightBus": {
-    "set_user_info": [
-      "{ desc: com.example.kotlindemo.ui.activity.MainActivity#receiveUserInfo(com.example.kotlindemo.mvp.model.entity.UserInfo userInfo), threadMode: MAIN }"
-    ]
-  },
-  "wrongBus": {}
-}
