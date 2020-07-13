@@ -1,5 +1,6 @@
 package com.example.kotlindemo.mvp.model
 
+import com.blankj.utilcode.util.SPUtils
 import com.example.kotlindemo.listener.ModelListener
 import com.example.kotlindemo.mvp.contract.MainContract
 import com.example.kotlindemo.mvp.model.entity.UserScoreInfo
@@ -11,14 +12,27 @@ import network.schedules.SchedulerProvider
 class MainModel : MainContract.IMainModel {
 
     override fun getUserScoreInfo(listener: ModelListener<UserScoreInfo>): Disposable? {
-       return RetrofitHelper.getInstance().getRequest()
+        return RetrofitHelper.getInstance().getRequest()
             ?.getUserScoreInfo()
             ?.compose(SchedulerProvider.getInstatnce()?.applySchedulers())
             ?.compose(ResponseTransformer.handleResult())
             ?.subscribe(
-                {t -> listener.onResponse(true, t, null, null)},
-                {throwable -> listener.onResponse(false, null, throwable.message, throwable)}
+                { t -> listener.onResponse(true, t, null, null) },
+                { throwable -> listener.onResponse(false, null, throwable.message, throwable) }
             )
     }
 
+    override fun logout(listener: ModelListener<String>): Disposable? {
+        return RetrofitHelper.getInstance().getRequest()
+            ?.logout()
+            ?.compose(SchedulerProvider.getInstatnce()?.applySchedulers())
+            ?.compose(ResponseTransformer.handleResult())
+            ?.subscribe(
+                { t ->
+                    SPUtils.getInstance().clear()
+                    listener.onResponse(true, t.toString(), null, null)
+                },
+                { throwable -> listener.onResponse(false, null, throwable.message, throwable) }
+            )
+    }
 }

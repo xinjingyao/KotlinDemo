@@ -29,4 +29,22 @@ class MainPresenter: BasePresenter<MainContract.IMainView>() {
         })
         addSubscription(disposable)
     }
+
+    fun logout() {
+        val logout = mainModel?.logout(object : ModelListener<String> {
+            override fun onResponse(
+                success: Boolean,
+                data: String?,
+                errorMsg: String?,
+                ext: Throwable?
+            ) {
+                if (success) {
+                    mView?.logoutSuccess()
+                } else {
+                    mView?.showToast(errorMsg)
+                }
+            }
+        })
+        addSubscription(logout)
+    }
 }

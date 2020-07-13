@@ -60,6 +60,12 @@ interface Request {
     ): Observable<Response<UserInfo>>
 
     /**
+     * 退出登录
+     */
+    @GET("user/logout/json")
+    fun logout(): Observable<Response<Any>>
+
+    /**
      * 获取个人积分，需要登录后访问
      * https://www.wanandroid.com/lg/coin/userinfo/json
      */

@@ -2,6 +2,8 @@ package com.example.kotlindemo.ui.activity
 
 import android.content.Context
 import android.content.Intent
+import android.view.MenuItem
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -18,6 +20,8 @@ import com.example.kotlindemo.mvp.model.entity.UserInfo
 import com.example.kotlindemo.mvp.model.entity.UserScoreInfo
 import com.example.kotlindemo.mvp.presenter.MainPresenter
 import com.example.kotlindemo.ui.fragment.*
+import com.example.kotlindemo.util.DialogUtils
+import com.example.kotlindemo.util.MethodUtils
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -30,6 +34,7 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
     private var tv_level_rank: TextView? = null
     private var iv_rank: ImageView? = null
     private var nav_score: TextView? = null
+    private var nav_logout: MenuItem? = null
 
     var userInfo: UserInfo? = null
     private val FRAGMENT_HOME = 0x01
@@ -116,8 +121,9 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
             tv_username = headerView.findViewById(R.id.tv_username)
             tv_id = headerView.findViewById(R.id.tv_id)
             tv_level_rank = headerView.findViewById(R.id.tv_level_rank)
-            nav_score =
-                MenuItemCompat.getActionView(nav_menu.menu.findItem(R.id.nav_score)) as TextView
+            nav_score = MenuItemCompat.getActionView(nav_menu.menu.findItem(R.id.nav_score)) as TextView
+            nav_logout = nav_menu.menu.findItem(R.id.nav_logout)
+            nav_logout?.isVisible = MethodUtils.isLogin()
         }
         tv_username?.setOnClickListener { LoginActivity.launch(this) }
         iv_rank?.setOnClickListener { showToast("iv_rank") }
@@ -141,7 +147,11 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
                 showToast("nav_setting")
             }
             R.id.nav_logout -> {
-                showToast("nav_logout")
+                DialogUtils.showLogoutDialog(object : DialogUtils.OnClickConfirmListener{
+                    override fun onClick() {
+                        mPresenter?.logout()
+                    }
+                })
             }
         }
         true
@@ -228,7 +238,6 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
         transaction.commit()
     }
 
-
     private fun hideFragment(transaction: FragmentTransaction) {
         mHomeFragment?.let { transaction.hide(it) }
         mSquareFragment?.let { transaction.hide(it) }
@@ -238,12 +247,21 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
     }
 
     @BusUtils.Bus(tag = EVENT_SET_USER_INFO, threadMode = BusUtils.ThreadMode.MAIN)
-    fun receiveUserInfo(userInfo: UserInfo) {
+    fun receiveUserInfo(userInfo: UserInfo?) {
         LogUtils.d("--receiveUserInfo")
         this.userInfo = userInfo
-        tv_username?.text = userInfo.username
-        tv_id?.text = StringUtils.getString(R.string.nav_id, userInfo.id)
-        mPresenter?.getUserScoreInfo()
+        if (userInfo == null) { // 退出登录时
+            tv_username?.text = StringUtils.getString(R.string.go_login)
+            tv_id?.text = StringUtils.getString(R.string.nav_id, "---")
+            tv_level_rank?.text = StringUtils.getString(R.string.nav_level_rank, "--", "--")
+            nav_score?.text = ""
+            nav_logout?.isVisible = false
+        } else{
+            nav_logout?.isVisible = true
+            tv_username?.text = userInfo.username
+            tv_id?.text = StringUtils.getString(R.string.nav_id, userInfo.id)
+            mPresenter?.getUserScoreInfo()
+        }
     }
 
     override fun showUserScore(userScoreInfo: UserScoreInfo?) {
@@ -257,8 +275,14 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
         nav_score?.text = userScoreInfo?.coinCount.toString()
     }
 
+    override fun logoutSuccess() {
+        showToast(StringUtils.getString(R.string.logout_success))
+        receiveUserInfo(null)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         BusUtils.unregister(this)
+        DialogUtils.dismissAll()
     }
 }

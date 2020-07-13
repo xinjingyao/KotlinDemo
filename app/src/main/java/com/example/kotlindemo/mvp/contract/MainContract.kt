@@ -11,9 +11,12 @@ interface MainContract {
     interface IMainView: IView {
 
         fun showUserScore(userScoreInfo: UserScoreInfo?)
+
+        fun logoutSuccess()
     }
 
     interface IMainModel: IModel {
         fun getUserScoreInfo(listener: ModelListener<UserScoreInfo>): Disposable?
+        fun logout(listener: ModelListener<String>): Disposable?
     }
 }
