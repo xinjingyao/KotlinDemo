@@ -16,6 +16,8 @@ import com.example.kotlindemo.mvp.model.entity.ArticleResponse
 import com.example.kotlindemo.mvp.model.entity.Banner
 import com.example.kotlindemo.mvp.presenter.SquarePresenter
 import com.example.kotlindemo.ui.activity.ContentActivity
+import com.example.kotlindemo.ui.activity.LoginActivity
+import com.example.kotlindemo.util.MethodUtils
 import com.example.kotlindemo.widget.SpaceItemDecoration
 import kotlinx.android.synthetic.main.fragment_list_common.*
 
@@ -92,6 +94,11 @@ class SquareFragment : BaseFragment<SquareContract.ISquareView, SquarePresenter>
                 //  点击item的某一项
                 LogUtils.d("--onclick item child")
                 if (datas.isEmpty()) return@setOnItemChildClickListener
+                // 没有登录先去登录
+                if (!MethodUtils.isLogin()) {
+                    activity?.let { LoginActivity.launch(it) }
+                    return@setOnItemChildClickListener
+                }
                 val article = datas[position]
                 val collect = article.collect
                 article.collect = !collect
