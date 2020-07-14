@@ -12,3 +12,8 @@ const val ARTICLE_CID = "article_cid"
 
 const val TITLE = "title"
 const val KNOWLEDGE_LIST = "knowledge_list"
+
+const val PAGE_TYPE = "page_type"
+object Page {
+    const val COLLECT = "collect"
+}

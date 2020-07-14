@@ -4,10 +4,7 @@ import com.example.kotlindemo.mvp.model.entity.*
 import io.reactivex.Observable
 import network.response.Response
 import org.json.JSONObject
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 /**
  * Created by AxeChen on 2018/3/19.
@@ -143,14 +140,14 @@ interface Request {
      */
     @GET("navi/json")
     fun getNaviJson(): Observable<Response<MutableList<NavBean>>>
-//
-//
-//    /**
-//     * 获取收藏的文章列表
-//     */
-//    @GET("lg/collect/list/{page}/json")
-//    fun getCollectArticleList(@Path("page") page: Int): Observable<Response<ProjectListBean>>
-//
+
+
+    /**
+     * 获取收藏的文章列表
+     */
+    @GET("lg/collect/list/{page}/json")
+    fun getCollectArticleList(@Path("page") page: Int): Observable<Response<BaseListResponse<CollectArticle>>>
+
 //    /**
 //     * 获取收藏的网站列表
 //     */
@@ -180,6 +177,17 @@ interface Request {
      */
     @POST("lg/uncollect_originId/{id}/json")
     fun unCollectArticle(@Path("id") id: Int): Observable<Response<JSONObject>>
+
+    /**
+     * 收藏列表中取消收藏文章
+     * http://www.wanandroid.com/lg/uncollect/2805/json
+     * @param id
+     * @param originId
+     */
+    @POST("lg/uncollect/{id}/json")
+    @FormUrlEncoded
+    fun removeCollectArticle(@Path("id") id: Int,
+                             @Field("originId") originId: Int = -1): Observable<Response<Any>>
 
     /**
      * 收藏网站

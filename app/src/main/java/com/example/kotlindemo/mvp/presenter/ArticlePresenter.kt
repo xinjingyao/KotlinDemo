@@ -2,12 +2,8 @@ package com.example.kotlindemo.mvp.presenter
 
 import com.example.kotlindemo.listener.ModelListener
 import com.example.kotlindemo.mvp.contract.ArticleContract
-import com.example.kotlindemo.mvp.contract.HomeContract
 import com.example.kotlindemo.mvp.model.ArticleModel
-import com.example.kotlindemo.mvp.model.HomeModel
 import com.example.kotlindemo.mvp.model.entity.ArticleResponse
-import com.example.kotlindemo.mvp.model.entity.Banner
-import io.reactivex.Observable
 
 class ArticlePresenter : CommonPresenter<ArticleContract.IArticleView>() {
 

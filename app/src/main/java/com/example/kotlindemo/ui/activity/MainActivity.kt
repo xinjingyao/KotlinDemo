@@ -13,6 +13,7 @@ import com.blankj.utilcode.util.BusUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.StringUtils
 import com.example.kotlindemo.EVENT_SET_USER_INFO
+import com.example.kotlindemo.Page
 import com.example.kotlindemo.R
 import com.example.kotlindemo.base.BaseActivity
 import com.example.kotlindemo.mvp.contract.MainContract
@@ -121,7 +122,8 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
             tv_username = headerView.findViewById(R.id.tv_username)
             tv_id = headerView.findViewById(R.id.tv_id)
             tv_level_rank = headerView.findViewById(R.id.tv_level_rank)
-            nav_score = MenuItemCompat.getActionView(nav_menu.menu.findItem(R.id.nav_score)) as TextView
+            nav_score =
+                MenuItemCompat.getActionView(nav_menu.menu.findItem(R.id.nav_score)) as TextView
             nav_logout = nav_menu.menu.findItem(R.id.nav_logout)
             nav_logout?.isVisible = MethodUtils.isLogin()
         }
@@ -132,13 +134,28 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
     private val onNavigationItemSelectedListener = NavigationView.OnNavigationItemSelectedListener {
         when (it.itemId) {
             R.id.nav_score -> {
-                showToast("nav_score")
+                if (MethodUtils.isLogin()) {
+
+                } else {
+                    showToast(StringUtils.getString(R.string.login_tint))
+                    LoginActivity.launch(this)
+                }
             }
             R.id.nav_collect -> {
-                showToast("nav_collect")
+                if (MethodUtils.isLogin()) {
+                    CommonActivity.start(this, Page.COLLECT)
+                } else {
+                    showToast(StringUtils.getString(R.string.login_tint))
+                    LoginActivity.launch(this)
+                }
             }
             R.id.nav_share -> {
-                showToast("nav_share")
+                if (MethodUtils.isLogin()) {
+
+                } else {
+                    showToast(StringUtils.getString(R.string.login_tint))
+                    LoginActivity.launch(this)
+                }
             }
             R.id.nav_night_mode -> {
                 showToast("nav_night_mode")
@@ -147,7 +164,7 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
                 showToast("nav_setting")
             }
             R.id.nav_logout -> {
-                DialogUtils.showLogoutDialog(object : DialogUtils.OnClickConfirmListener{
+                DialogUtils.showLogoutDialog(object : DialogUtils.OnClickConfirmListener {
                     override fun onClick() {
                         mPresenter?.logout()
                     }
@@ -256,7 +273,7 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
             tv_level_rank?.text = StringUtils.getString(R.string.nav_level_rank, "--", "--")
             nav_score?.text = ""
             nav_logout?.isVisible = false
-        } else{
+        } else {
             nav_logout?.isVisible = true
             tv_username?.text = userInfo.username
             tv_id?.text = StringUtils.getString(R.string.nav_id, userInfo.id)

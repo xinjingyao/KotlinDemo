@@ -6,5 +6,5 @@ import com.example.kotlindemo.USER_ID
 
 object MethodUtils {
 
-    fun isLogin(): Boolean = !StringUtils.isEmpty(SPUtils.getInstance().getString(USER_ID))
+    fun isLogin(): Boolean = SPUtils.getInstance().getInt(USER_ID) != 0
 }

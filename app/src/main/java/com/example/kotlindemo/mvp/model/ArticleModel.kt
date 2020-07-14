@@ -20,5 +20,4 @@ class ArticleModel : CommonModel(), ArticleContract.IArticleModel {
                 { throwable -> listener.onResponse(false, null, throwable.message, throwable) }
             )
     }
-
 }

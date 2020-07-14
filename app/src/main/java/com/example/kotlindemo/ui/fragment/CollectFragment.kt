@@ -1,57 +1,44 @@
 package com.example.kotlindemo.ui.fragment
 
-import android.os.Bundle
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.StringUtils
-import com.example.kotlindemo.ARTICLE_CID
 import com.example.kotlindemo.R
-import com.example.kotlindemo.adaper.HomeAdapter
+import com.example.kotlindemo.adaper.CollectAdapter
 import com.example.kotlindemo.base.BaseFragment
-import com.example.kotlindemo.mvp.contract.ArticleContract
-import com.example.kotlindemo.mvp.model.entity.Article
-import com.example.kotlindemo.mvp.model.entity.ArticleResponse
-import com.example.kotlindemo.mvp.presenter.ArticlePresenter
+import com.example.kotlindemo.mvp.contract.CollectContract
+import com.example.kotlindemo.mvp.model.entity.BaseListResponse
+import com.example.kotlindemo.mvp.model.entity.CollectArticle
+import com.example.kotlindemo.mvp.presenter.CollectPresenter
 import com.example.kotlindemo.ui.activity.ContentActivity
-import com.example.kotlindemo.ui.activity.LoginActivity
-import com.example.kotlindemo.util.MethodUtils
 import com.example.kotlindemo.widget.SpaceItemDecoration
 import kotlinx.android.synthetic.main.fragment_list_common.*
 
-class ArticleFragment : BaseFragment<ArticleContract.IArticleView, ArticlePresenter>(), ArticleContract.IArticleView {
+class CollectFragment : BaseFragment<CollectContract.ICollectView, CollectPresenter>(), CollectContract.ICollectView {
 
-    private val datas = mutableListOf<Article>()
-    private val homeAdapter: HomeAdapter by lazy {
-        HomeAdapter(datas)
+    private val datas = mutableListOf<CollectArticle>()
+    private val homeAdapter: CollectAdapter by lazy {
+        CollectAdapter(datas)
     }
     private var isRefresh: Boolean = true
-    private var cid = 0
 
     companion object {
-        fun getInstance(cid: Int): ArticleFragment {
-            val fragment = ArticleFragment()
-            val bundle = Bundle()
-            bundle.putInt(ARTICLE_CID, cid)
-            fragment.arguments = bundle
-            return fragment
-        }
+        fun getInstance(): CollectFragment  = CollectFragment()
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_list_common
 
-    override fun createPresenter(): ArticlePresenter = ArticlePresenter()
+    override fun createPresenter(): CollectPresenter = CollectPresenter()
 
     override fun initView() {
-        cid = arguments?.getInt(ARTICLE_CID) ?: 0
         initSwipeRefreshLayout()
         initRecyclerView()
     }
 
-
     override fun initData() {
         swipeRefreshLayout.isRefreshing = true
-        mPresenter?.getArticles(0, cid)
+        mPresenter?.getCollectArticles(0)
     }
 
     /**
@@ -62,7 +49,7 @@ class ArticleFragment : BaseFragment<ArticleContract.IArticleView, ArticlePresen
             //  下拉刷新
             isRefresh = true
             homeAdapter.loadMoreModule.isEnableLoadMore = false
-            mPresenter?.getArticles(0, cid)
+            mPresenter?.getCollectArticles(0)
         }
     }
 
@@ -83,37 +70,27 @@ class ArticleFragment : BaseFragment<ArticleContract.IArticleView, ArticlePresen
                 isRefresh = false
                 swipeRefreshLayout.isRefreshing = false
                 val page = data.size / 20
-                mPresenter?.getArticles(page, cid)
+                mPresenter?.getCollectArticles(page)
             }
             setOnItemClickListener { adapter, view, position ->
                 //  点击item
                 if (datas.isEmpty()) return@setOnItemClickListener
                 val article = datas[position]
+                LogUtils.d("item position=${position}")
                 ContentActivity.start(context, article.id, article.title, article.link)
             }
             setOnItemChildClickListener { adapter, view, position ->
                 //  点击item的某一项
                 LogUtils.d("--onclick item child")
                 if (datas.isEmpty()) return@setOnItemChildClickListener
-                // 没有登录先去登录
-                if (!MethodUtils.isLogin()) {
-                    activity?.let { LoginActivity.launch(it) }
-                    return@setOnItemChildClickListener
-                }
                 val article = datas[position]
-                val collect = article.collect
-                article.collect = !collect
-                setData(position, article)
-                if (collect) {
-                    mPresenter?.cancelCollectArticle(article.id)
-                } else {
-                    mPresenter?.collectArticle(article.id)
-                }
+                mPresenter?.removeCollectArticle(article.id, article.originId)
+                adapter.removeAt(position)
             }
         }
     }
 
-    override fun showArticleList(articleResponse: ArticleResponse?) {
+    override fun showCollectList(articleResponse: BaseListResponse<CollectArticle>?) {
         swipeRefreshLayout.isRefreshing = false
         articleResponse?.datas?.let {
             if (isRefresh)
@@ -133,13 +110,7 @@ class ArticleFragment : BaseFragment<ArticleContract.IArticleView, ArticlePresen
         }
     }
 
-    override fun showCollectResult(success: Boolean) {
-        if (success) {
-            showToast(StringUtils.getString(R.string.collect_success))
-        }
-    }
-
-    override fun showCancelCollectResult(success: Boolean) {
+    override fun removeCollectResult(success: Boolean) {
         if (success) {
             showToast(StringUtils.getString(R.string.cancel_collect_success))
         }

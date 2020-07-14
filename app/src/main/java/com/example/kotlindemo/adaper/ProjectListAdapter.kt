@@ -11,6 +11,12 @@ import com.example.kotlindemo.util.ImageLoader
 class ProjectListAdapter(datas: MutableList<Article>?) :
     BaseQuickAdapter<Article, BaseViewHolder>(R.layout.item_project, datas), LoadMoreModule {
 
+    init {
+        // 点击事件必须放到构造函数中
+        // 收藏可以点击
+        addChildClickViewIds(R.id.iv_like)
+    }
+
     override fun convert(holder: BaseViewHolder, item: Article) {
 
         val authorStr = if (item.author.isNotEmpty()) item.author else item.shareUser
@@ -26,8 +32,5 @@ class ProjectListAdapter(datas: MutableList<Article>?) :
 
         // 显示图片
         ImageLoader.load(context, item.envelopePic, holder.getView(R.id.iv_project))
-
-        // 收藏可以点击
-        addChildClickViewIds(R.id.iv_like)
     }
 }
