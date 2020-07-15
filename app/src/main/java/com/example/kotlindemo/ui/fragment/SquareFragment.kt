@@ -18,7 +18,7 @@ import com.example.kotlindemo.mvp.presenter.SquarePresenter
 import com.example.kotlindemo.ui.activity.ContentActivity
 import com.example.kotlindemo.ui.activity.LoginActivity
 import com.example.kotlindemo.util.MethodUtils
-import com.example.kotlindemo.widget.SpaceItemDecoration
+import com.example.kotlindemo.widget.LineItemDecoration
 import kotlinx.android.synthetic.main.fragment_list_common.*
 
 class SquareFragment : BaseFragment<SquareContract.ISquareView, SquarePresenter>(), SquareContract.ISquareView {
@@ -72,7 +72,7 @@ class SquareFragment : BaseFragment<SquareContract.ISquareView, SquarePresenter>
             layoutManager = LinearLayoutManager(context)
             adapter = homeAdapter
             itemAnimator = DefaultItemAnimator()
-            addItemDecoration(SpaceItemDecoration(context))
+            addItemDecoration(LineItemDecoration(context))
         }
 
         homeAdapter.run {

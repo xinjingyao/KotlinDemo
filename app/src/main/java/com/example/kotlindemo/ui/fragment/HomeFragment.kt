@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import cn.bingoogolapple.bgabanner.BGABanner
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.StringUtils
-import com.blankj.utilcode.util.ToastUtils
 import com.example.kotlindemo.adaper.HomeAdapter
 import com.example.kotlindemo.R
 import com.example.kotlindemo.base.BaseFragment
@@ -20,7 +19,7 @@ import com.example.kotlindemo.ui.activity.ContentActivity
 import com.example.kotlindemo.ui.activity.LoginActivity
 import com.example.kotlindemo.util.ImageLoader
 import com.example.kotlindemo.util.MethodUtils
-import com.example.kotlindemo.widget.SpaceItemDecoration
+import com.example.kotlindemo.widget.LineItemDecoration
 import kotlinx.android.synthetic.main.fragment_list_common.*
 import kotlinx.android.synthetic.main.item_home_banner.*
 
@@ -96,7 +95,7 @@ class HomeFragment : BaseFragment<HomeContract.IHomeView, HomePresenter>(), Home
             layoutManager = LinearLayoutManager(context)
             adapter = homeAdapter
             itemAnimator = DefaultItemAnimator()
-            addItemDecoration(SpaceItemDecoration(context))
+            addItemDecoration(LineItemDecoration(context))
         }
 
         homeAdapter.run {

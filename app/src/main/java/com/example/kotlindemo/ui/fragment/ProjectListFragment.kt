@@ -16,7 +16,7 @@ import com.example.kotlindemo.mvp.presenter.ProjectListPresenter
 import com.example.kotlindemo.ui.activity.ContentActivity
 import com.example.kotlindemo.ui.activity.LoginActivity
 import com.example.kotlindemo.util.MethodUtils
-import com.example.kotlindemo.widget.SpaceItemDecoration
+import com.example.kotlindemo.widget.LineItemDecoration
 import kotlinx.android.synthetic.main.fragment_list_common.*
 
 class ProjectListFragment : BaseFragment<ProjectListContract.IProjectListView, ProjectListPresenter>(), ProjectListContract.IProjectListView {
@@ -74,7 +74,7 @@ class ProjectListFragment : BaseFragment<ProjectListContract.IProjectListView, P
             layoutManager = LinearLayoutManager(context)
             adapter = projectAdapter
             itemAnimator = DefaultItemAnimator()
-            addItemDecoration(SpaceItemDecoration(context))
+            addItemDecoration(LineItemDecoration(context))
         }
 
         projectAdapter.run {

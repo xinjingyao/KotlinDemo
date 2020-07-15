@@ -14,6 +14,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.example.kotlindemo.R
 import com.example.kotlindemo.mvp.model.entity.NavBean
 import com.example.kotlindemo.ui.activity.ContentActivity
+import com.example.kotlindemo.util.MethodUtils
 import com.example.kotlindemo.util.SelectorUtils
 import com.google.android.flexbox.FlexboxLayout
 import java.util.*
@@ -65,7 +66,7 @@ class NavAdapter(datas: MutableList<NavBean>) :
 
     private fun createTextView(): TextView {
         val textView = TextView(context)
-        textView.setTextColor(randomColor())
+        textView.setTextColor(MethodUtils.randomColor())
         textView.background = SelectorUtils.getSelector(
             ColorUtils.getColor(R.color.Grey100),
             ColorUtils.getColor(R.color.Blue_Grey),
@@ -96,18 +97,5 @@ class NavAdapter(datas: MutableList<NavBean>) :
      */
     class NavViewHolder(view: View) : BaseViewHolder(view) {
         val viewList = mutableListOf<TextView>()
-    }
-
-    /**
-     * 获取随机rgb颜色值
-     */
-    fun randomColor(): Int {
-        val random = Random()
-        //0-190, 如果颜色值过大,就越接近白色,就看不清了,所以需要限定范围
-        var red = random.nextInt(190)
-        var green = random.nextInt(190)
-        var blue = random.nextInt(190)
-        //使用rgb混合生成一种新的颜色,Color.rgb生成的是一个int数
-        return Color.rgb(red, green, blue)
     }
 }

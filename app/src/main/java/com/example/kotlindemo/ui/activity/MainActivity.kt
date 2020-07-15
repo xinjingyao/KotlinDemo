@@ -2,6 +2,7 @@ package com.example.kotlindemo.ui.activity
 
 import android.content.Context
 import android.content.Intent
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
@@ -27,6 +28,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
+import java.util.zip.Inflater
 
 class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), MainContract.IMainView {
 
@@ -295,6 +297,22 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
     override fun logoutSuccess() {
         showToast(StringUtils.getString(R.string.logout_success))
         receiveUserInfo(null)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        if (mIndex != FRAGMENT_SQUARE) {
+            menuInflater.inflate(R.menu.menu_main, menu)
+        }
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.action_search -> {
+                SearchActivity.start(this)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onDestroy() {

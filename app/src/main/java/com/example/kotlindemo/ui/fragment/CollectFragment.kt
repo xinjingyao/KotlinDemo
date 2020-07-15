@@ -12,7 +12,7 @@ import com.example.kotlindemo.mvp.model.entity.BaseListResponse
 import com.example.kotlindemo.mvp.model.entity.CollectArticle
 import com.example.kotlindemo.mvp.presenter.CollectPresenter
 import com.example.kotlindemo.ui.activity.ContentActivity
-import com.example.kotlindemo.widget.SpaceItemDecoration
+import com.example.kotlindemo.widget.LineItemDecoration
 import kotlinx.android.synthetic.main.fragment_list_common.*
 
 class CollectFragment : BaseFragment<CollectContract.ICollectView, CollectPresenter>(), CollectContract.ICollectView {
@@ -61,7 +61,7 @@ class CollectFragment : BaseFragment<CollectContract.ICollectView, CollectPresen
             layoutManager = LinearLayoutManager(context)
             adapter = homeAdapter
             itemAnimator = DefaultItemAnimator()
-            addItemDecoration(SpaceItemDecoration(context))
+            addItemDecoration(LineItemDecoration(context))
         }
 
         homeAdapter.run {

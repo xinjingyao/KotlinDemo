@@ -10,9 +10,8 @@ import com.example.kotlindemo.base.BaseFragment
 import com.example.kotlindemo.mvp.contract.KnowledgeTreeContract
 import com.example.kotlindemo.mvp.model.entity.KnowledgeTree
 import com.example.kotlindemo.mvp.presenter.KnowledgeTreePresenter
-import com.example.kotlindemo.ui.activity.ContentActivity
 import com.example.kotlindemo.ui.activity.KnowledgeActivity
-import com.example.kotlindemo.widget.SpaceItemDecoration
+import com.example.kotlindemo.widget.LineItemDecoration
 import kotlinx.android.synthetic.main.fragment_list_common.*
 
 class KnowledgeTreeFragment : BaseFragment<KnowledgeTreeContract.IKnowledgeTreeView, KnowledgeTreePresenter>(), KnowledgeTreeContract.IKnowledgeTreeView {
@@ -61,7 +60,7 @@ class KnowledgeTreeFragment : BaseFragment<KnowledgeTreeContract.IKnowledgeTreeV
             layoutManager = LinearLayoutManager(context)
             adapter = mAdapter
             itemAnimator = DefaultItemAnimator()
-            addItemDecoration(SpaceItemDecoration(context))
+            addItemDecoration(LineItemDecoration(context))
         }
 
         mAdapter.run {

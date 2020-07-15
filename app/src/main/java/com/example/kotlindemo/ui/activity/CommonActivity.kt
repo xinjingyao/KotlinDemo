@@ -33,6 +33,7 @@ class CommonActivity: BaseActivity<EmptyContract.IEmptyView, EmptyPresenter>() {
         val pageType = extras?.getString(PAGE_TYPE)
 
         toolbar.run {
+            title = StringUtils.getString(R.string.app_name)
             setSupportActionBar(this)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
