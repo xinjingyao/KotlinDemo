@@ -2,6 +2,7 @@ package com.example.kotlindemo.ui.activity
 
 import android.content.Context
 import android.content.Intent
+import android.view.KeyEvent
 import android.view.Menu
 import android.widget.SearchView
 import com.blankj.utilcode.util.SizeUtils
@@ -79,6 +80,18 @@ class SearchActivity : BaseActivity<SearchContract.ISearchView, SearchPresenter>
         searchView.queryHint = StringUtils.getString(R.string.search_hint)
         // 隐藏提交按钮
         searchView.isSubmitButtonEnabled = false
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                showToast(query)
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+
+        })
         return super.onCreateOptionsMenu(menu)
     }
+
 }
