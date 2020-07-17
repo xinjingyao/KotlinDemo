@@ -54,6 +54,8 @@ class SearchModel : SearchContract.ISearchModel {
         return Observable.create<MutableList<SearchHistoryBean>> {
             LogUtils.d("--thread=${Thread.currentThread().name}")
             val findAll = LitePal.findAll<SearchHistoryBean>()
+            // 倒叙
+            findAll.reverse()
             it.onNext(findAll)
         }
             .subscribeOn(Schedulers.io())

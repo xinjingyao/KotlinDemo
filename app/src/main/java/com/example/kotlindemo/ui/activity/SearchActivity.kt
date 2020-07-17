@@ -10,6 +10,7 @@ import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.StringUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import com.example.kotlindemo.Page
 import com.example.kotlindemo.R
 import com.example.kotlindemo.adaper.TagAdapter
 import com.example.kotlindemo.base.BaseActivity
@@ -139,8 +140,10 @@ class SearchActivity : BaseActivity<SearchContract.ISearchView, SearchPresenter>
     }
 
     fun goSearchResultPage(key: String?) {
-        key?.let { mPresenter?.add(it) }
-        showToast(key)
+        key?.let {
+            mPresenter?.add(it)
+            CommonActivity.start(this, Page.SEARCH_LIST, key)
+        }
     }
 
     class SearchAdapter(datas: MutableList<SearchHistoryBean>) :

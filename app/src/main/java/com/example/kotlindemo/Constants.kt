@@ -11,9 +11,11 @@ const val CONTENT_SHARE_TYPE = "text/plain"
 const val ARTICLE_CID = "article_cid"
 
 const val TITLE = "title"
+const val KEY = "key"
 const val KNOWLEDGE_LIST = "knowledge_list"
 
 const val PAGE_TYPE = "page_type"
 object Page {
     const val COLLECT = "collect"
+    const val SEARCH_LIST = "search_list"
 }

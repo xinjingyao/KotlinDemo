@@ -127,14 +127,14 @@ interface Request {
      */
     @GET("hotkey/json")
     fun getHotSearchTag(): Observable<Response<MutableList<HotSearchBean>>>
-//
-//    /**
-//     * 搜索
-//     */
-//    @POST("article/query/{page}/json")
-//    fun search(@Path("page") page: Int,
-//               @Query("k") text: String): Observable<Response<ProjectListBean>>
-//
+
+    /**
+     * 搜索
+     */
+    @POST("article/query/{page}/json")
+    fun searchByKey(@Path("page") page: Int,
+               @Query("k") text: String): Observable<Response<ArticleResponse>>
+
     /**
      * 网址导航
      */
