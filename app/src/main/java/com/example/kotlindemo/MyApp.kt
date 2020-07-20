@@ -6,11 +6,16 @@ import com.blankj.utilcode.util.CrashUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.LogUtils.IFormatter
 import com.blankj.utilcode.util.Utils
+import com.example.kotlindemo.mvp.model.entity.UserScoreInfo
 import com.mg.axechen.wanandroid.network.RetrofitHelper
 import org.litepal.LitePal
 import java.util.*
 
 class MyApp: Application() {
+
+    companion object {
+        var scoreInfo:UserScoreInfo? = null
+    }
 
     override fun onCreate() {
         super.onCreate()

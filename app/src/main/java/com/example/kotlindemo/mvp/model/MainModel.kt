@@ -1,6 +1,7 @@
 package com.example.kotlindemo.mvp.model
 
 import com.blankj.utilcode.util.SPUtils
+import com.example.kotlindemo.MyApp
 import com.example.kotlindemo.listener.ModelListener
 import com.example.kotlindemo.mvp.contract.MainContract
 import com.example.kotlindemo.mvp.model.entity.UserScoreInfo
@@ -17,7 +18,9 @@ class MainModel : MainContract.IMainModel {
             ?.compose(SchedulerProvider.getInstatnce()?.applySchedulers())
             ?.compose(ResponseTransformer.handleResult())
             ?.subscribe(
-                { t -> listener.onResponse(true, t, null, null) },
+                { t ->
+                    MyApp.scoreInfo = t
+                    listener.onResponse(true, t, null, null) },
                 { throwable -> listener.onResponse(false, null, throwable.message, throwable) }
             )
     }

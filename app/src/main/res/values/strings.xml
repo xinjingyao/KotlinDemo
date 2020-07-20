@@ -9,7 +9,7 @@
     <string name="navigation">导航</string>
     <string name="project">项目</string>
     <string name="wechat">公众号</string>
-    <string name="my_share">my_share</string>
+    <string name="my_share">我的分享</string>
 
     <string name="exit_tip">再按一次退出程序</string>
     <string name="share_article_url">%1$s分享【%2$s】：%3$s</string>
@@ -41,6 +41,7 @@
     <string name="nav_level_rank">等级：%s  排名：%s</string>
 
     <string name="score">积分</string>
+    <string name="score_total">总积分：%s</string>
     <string name="score_detail">积分明细</string>
     <string name="help_label">帮助</string>
     <string name="score_list">积分排行榜</string>

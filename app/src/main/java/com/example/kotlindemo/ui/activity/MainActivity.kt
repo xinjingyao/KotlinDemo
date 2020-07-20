@@ -2,6 +2,7 @@ package com.example.kotlindemo.ui.activity
 
 import android.content.Context
 import android.content.Intent
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -126,6 +127,7 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
             tv_level_rank = headerView.findViewById(R.id.tv_level_rank)
             nav_score =
                 MenuItemCompat.getActionView(nav_menu.menu.findItem(R.id.nav_score)) as TextView
+            nav_score?.gravity = Gravity.CENTER
             nav_logout = nav_menu.menu.findItem(R.id.nav_logout)
             nav_logout?.isVisible = MethodUtils.isLogin()
         }
@@ -137,7 +139,7 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
         when (it.itemId) {
             R.id.nav_score -> {
                 if (MethodUtils.isLogin()) {
-
+                    ScoreActivity.start(this)
                 } else {
                     showToast(StringUtils.getString(R.string.login_tint))
                     LoginActivity.launch(this)
