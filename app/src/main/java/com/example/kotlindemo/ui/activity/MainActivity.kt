@@ -2,6 +2,7 @@ package com.example.kotlindemo.ui.activity
 
 import android.content.Context
 import android.content.Intent
+import android.os.SystemClock
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
@@ -11,6 +12,7 @@ import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.FragmentTransaction
+import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.BusUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.StringUtils
@@ -52,6 +54,8 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
     private var mSystemFragment: SystemFragment? = null
     private var mProjectFragment: ProjectFragment? = null
     var mIndex: Int = FRAGMENT_HOME
+
+    private var clickTimeStart: Long = 0
 
     companion object {
         fun launch(context: Context) {
@@ -315,6 +319,17 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        var curTime = SystemClock.uptimeMillis()
+        if (curTime - clickTimeStart > 1500) {
+            clickTimeStart = curTime
+            showToast(StringUtils.getString(R.string.exit_tip))
+            return
+        }
+        finish()
+        super.onBackPressed()
     }
 
     override fun onDestroy() {
