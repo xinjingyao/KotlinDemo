@@ -99,7 +99,10 @@ interface Request {
      * @param cid
      */
     @GET("article/list/{page}/json")
-    fun getKnowledgeList(@Path("page") page: Int, @Query("cid") cid: Int): Observable<Response<ArticleResponse>>
+    fun getKnowledgeList(
+        @Path("page") page: Int,
+        @Query("cid") cid: Int
+    ): Observable<Response<ArticleResponse>>
 
 
     /**
@@ -120,8 +123,10 @@ interface Request {
      * 根据项目分类id获取项目列表
      */
     @GET("project/list/{page}/json")
-    fun getProjectListByCid(@Path("page") page: Int,
-                            @Query("cid") cid: Int): Observable<Response<ArticleResponse>>
+    fun getProjectListByCid(
+        @Path("page") page: Int,
+        @Query("cid") cid: Int
+    ): Observable<Response<ArticleResponse>>
 //
 //    /**
 //     * 获取知识体系的文章
@@ -140,8 +145,16 @@ interface Request {
      * 搜索
      */
     @POST("article/query/{page}/json")
-    fun searchByKey(@Path("page") page: Int,
-               @Query("k") text: String): Observable<Response<ArticleResponse>>
+    fun searchByKey(
+        @Path("page") page: Int,
+        @Query("k") text: String
+    ): Observable<Response<ArticleResponse>>
+
+    @POST("lg/user_article/add/json")
+    fun shareArticle(
+        @Query("title") title: String,
+        @Query("link") link: String
+    ): Observable<Response<Any>>
 
     /**
      * 网址导航
@@ -194,8 +207,10 @@ interface Request {
      */
     @POST("lg/uncollect/{id}/json")
     @FormUrlEncoded
-    fun removeCollectArticle(@Path("id") id: Int,
-                             @Field("originId") originId: Int = -1): Observable<Response<Any>>
+    fun removeCollectArticle(
+        @Path("id") id: Int,
+        @Field("originId") originId: Int = -1
+    ): Observable<Response<Any>>
 
     /**
      * 收藏网站

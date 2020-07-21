@@ -12,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.webkit.WebSettings
 import android.webkit.WebView
-import android.widget.LinearLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.StringUtils
@@ -133,7 +132,7 @@ class ContentActivity : BaseActivity<EmptyContract.IEmptyView, EmptyPresenter>()
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_share -> {
+            R.id.action_add -> {
                 Intent().run {
                     action = Intent.ACTION_SEND
                     putExtra(

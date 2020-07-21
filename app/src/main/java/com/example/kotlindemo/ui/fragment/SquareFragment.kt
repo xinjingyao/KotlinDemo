@@ -4,10 +4,8 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.ImageView
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
-import cn.bingoogolapple.bgabanner.BGABanner
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.StringUtils
 import com.example.kotlindemo.Page
@@ -17,7 +15,6 @@ import com.example.kotlindemo.base.BaseFragment
 import com.example.kotlindemo.mvp.contract.SquareContract
 import com.example.kotlindemo.mvp.model.entity.Article
 import com.example.kotlindemo.mvp.model.entity.ArticleResponse
-import com.example.kotlindemo.mvp.model.entity.Banner
 import com.example.kotlindemo.mvp.presenter.SquarePresenter
 import com.example.kotlindemo.ui.activity.CommonActivity
 import com.example.kotlindemo.ui.activity.ContentActivity
@@ -158,13 +155,13 @@ class SquareFragment : BaseFragment<SquareContract.ISquareView, SquarePresenter>
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_share, menu)
+        inflater.inflate(R.menu.menu_add, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_share -> {
+            R.id.action_add -> {
                 context?.let { CommonActivity.start(it, Page.SHARE_ARTICLE) }
                 return true
             }
