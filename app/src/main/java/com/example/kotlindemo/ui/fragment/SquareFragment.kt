@@ -29,9 +29,8 @@ class SquareFragment : BaseFragment<SquareContract.ISquareView, SquarePresenter>
     private val homeAdapter: HomeAdapter by lazy {
         HomeAdapter(datas)
     }
-    private var bannerAdapter: BGABanner.Adapter<ImageView, String>? = null
-    private var banners: List<Banner>? = null
     private var isRefresh: Boolean = true
+    private var curPage: Int = 0
 
     companion object {
         fun getInstance(): SquareFragment = SquareFragment()
@@ -60,7 +59,8 @@ class SquareFragment : BaseFragment<SquareContract.ISquareView, SquarePresenter>
             //  下拉刷新
             isRefresh = true
             homeAdapter.loadMoreModule.isEnableLoadMore = false
-            mPresenter?.getSquareList(0)
+            curPage = 0
+            mPresenter?.getSquareList(curPage)
         }
     }
 
@@ -76,13 +76,11 @@ class SquareFragment : BaseFragment<SquareContract.ISquareView, SquarePresenter>
         }
 
         homeAdapter.run {
-            bannerView?.let { addHeaderView(it) }
             loadMoreModule.setOnLoadMoreListener {
                 // 加载更多
                 isRefresh = false
                 swipeRefreshLayout.isRefreshing = false
-                val page = data.size / 20
-                mPresenter?.getSquareList(page)
+                mPresenter?.getSquareList(curPage + 1)
             }
             setOnItemClickListener { adapter, view, position ->
                 //  点击item
@@ -119,7 +117,8 @@ class SquareFragment : BaseFragment<SquareContract.ISquareView, SquarePresenter>
                 homeAdapter.setList(it)
             else
                 homeAdapter.addData(it)
-            if (it.size < articleResponse.size) {
+            curPage = articleResponse.curPage
+            if (articleResponse.over) {
                 homeAdapter.loadMoreModule.loadMoreEnd(isRefresh)
             } else {
                 homeAdapter.loadMoreModule.loadMoreComplete()
