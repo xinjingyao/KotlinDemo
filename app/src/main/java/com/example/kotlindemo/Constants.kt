@@ -18,4 +18,5 @@ const val PAGE_TYPE = "page_type"
 object Page {
     const val COLLECT = "collect"
     const val SEARCH_LIST = "search_list"
+    const val SHARE_ARTICLE = "share_article"
 }

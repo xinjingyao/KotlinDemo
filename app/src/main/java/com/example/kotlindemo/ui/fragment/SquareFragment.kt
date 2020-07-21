@@ -1,5 +1,8 @@
 package com.example.kotlindemo.ui.fragment
 
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -7,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import cn.bingoogolapple.bgabanner.BGABanner
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.StringUtils
+import com.example.kotlindemo.Page
 import com.example.kotlindemo.R
 import com.example.kotlindemo.adaper.HomeAdapter
 import com.example.kotlindemo.base.BaseFragment
@@ -15,13 +19,15 @@ import com.example.kotlindemo.mvp.model.entity.Article
 import com.example.kotlindemo.mvp.model.entity.ArticleResponse
 import com.example.kotlindemo.mvp.model.entity.Banner
 import com.example.kotlindemo.mvp.presenter.SquarePresenter
+import com.example.kotlindemo.ui.activity.CommonActivity
 import com.example.kotlindemo.ui.activity.ContentActivity
 import com.example.kotlindemo.ui.activity.LoginActivity
 import com.example.kotlindemo.util.MethodUtils
 import com.example.kotlindemo.widget.LineItemDecoration
 import kotlinx.android.synthetic.main.fragment_list_common.*
 
-class SquareFragment : BaseFragment<SquareContract.ISquareView, SquarePresenter>(), SquareContract.ISquareView {
+class SquareFragment : BaseFragment<SquareContract.ISquareView, SquarePresenter>(),
+    SquareContract.ISquareView {
 
     private var bannerView: View? = null
 
@@ -41,6 +47,8 @@ class SquareFragment : BaseFragment<SquareContract.ISquareView, SquarePresenter>
     override fun createPresenter(): SquarePresenter = SquarePresenter()
 
     override fun initView() {
+        // 想在fragment控制activity中的toolbar必须设置这个
+        setHasOptionsMenu(true)
         initSwipeRefreshLayout()
         initRecyclerView()
     }
@@ -147,5 +155,20 @@ class SquareFragment : BaseFragment<SquareContract.ISquareView, SquarePresenter>
         super.showError(msg)
         swipeRefreshLayout.isRefreshing = false
         LogUtils.d("---git")
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_share, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_share -> {
+                context?.let { CommonActivity.start(it, Page.SHARE_ARTICLE) }
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

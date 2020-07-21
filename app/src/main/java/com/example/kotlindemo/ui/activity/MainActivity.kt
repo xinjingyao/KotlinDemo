@@ -97,6 +97,7 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
      */
     private fun initBottomNav() {
         bottom_nav.run {
+            labelVisibilityMode = 1
             setOnNavigationItemSelectedListener(onBottomNavigationItemSelectedListener)
         }
     }
@@ -336,5 +337,10 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
         super.onDestroy()
         BusUtils.unregister(this)
         DialogUtils.dismissAll()
+        mHomeFragment = null
+        mSquareFragment = null
+        mSystemFragment = null
+        mProjectFragment = null
+        mWeChatFragment = null
     }
 }

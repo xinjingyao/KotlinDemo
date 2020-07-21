@@ -12,6 +12,7 @@ import com.example.kotlindemo.mvp.contract.EmptyContract
 import com.example.kotlindemo.mvp.presenter.EmptyPresenter
 import com.example.kotlindemo.ui.fragment.CollectFragment
 import com.example.kotlindemo.ui.fragment.SearchListFragment
+import com.example.kotlindemo.ui.fragment.ShareFragment
 import kotlinx.android.synthetic.main.toolbar.*
 
 class CommonActivity : BaseActivity<EmptyContract.IEmptyView, EmptyPresenter>() {
@@ -49,6 +50,10 @@ class CommonActivity : BaseActivity<EmptyContract.IEmptyView, EmptyPresenter>() 
                 val hotKey = extras.getString(KEY)
                 toolbar.title = hotKey
                 hotKey?.let { SearchListFragment.getInstance(it) }
+            }
+            Page.SHARE_ARTICLE -> {
+                toolbar.title = StringUtils.getString(R.string.share_article)
+                ShareFragment.newInstance()
             }
             else -> null
         }
