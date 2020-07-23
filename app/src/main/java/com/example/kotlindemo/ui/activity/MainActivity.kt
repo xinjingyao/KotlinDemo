@@ -160,7 +160,7 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
             }
             R.id.nav_share -> {
                 if (MethodUtils.isLogin()) {
-
+                    MyShareActivity.start(this)
                 } else {
                     showToast(StringUtils.getString(R.string.login_tint))
                     LoginActivity.launch(this)

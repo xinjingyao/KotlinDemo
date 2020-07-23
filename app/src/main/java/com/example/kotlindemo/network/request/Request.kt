@@ -127,13 +127,6 @@ interface Request {
         @Path("page") page: Int,
         @Query("cid") cid: Int
     ): Observable<Response<ArticleResponse>>
-//
-//    /**
-//     * 获取知识体系的文章
-//     */
-//    @GET("article/list/{page}/json")
-//    fun getKnowledgeList(@Path("page") page: Int,
-//                         @Query("cid") cid: Int): Observable<Response<ProjectListBean>>
 
     /**
      * 获取热词
@@ -150,11 +143,30 @@ interface Request {
         @Query("k") text: String
     ): Observable<Response<ArticleResponse>>
 
+    /**
+     * 分享文章
+     */
     @POST("lg/user_article/add/json")
     fun shareArticle(
         @Query("title") title: String,
         @Query("link") link: String
     ): Observable<Response<Any>>
+
+    /**
+     * 自己的分享的文章列表
+     * https://wanandroid.com/user/lg/private_articles/1/json
+     * @param page 页码 从1开始
+     */
+    @GET("user/lg/private_articles/{page}/json")
+    fun getShareList(@Path("page") page: Int): Observable<Response<MyShareBean>>
+
+    /**
+     * 删除自己分享的文章
+     * https://wanandroid.com/lg/user_article/delete/9475/json
+     * @param id 文章id，拼接在链接上
+     */
+    @POST("lg/user_article/delete/{id}/json")
+    fun deleteShareArticle(@Path("id") id: Int): Observable<Response<Any>>
 
     /**
      * 网址导航
