@@ -2,10 +2,13 @@ package com.example.kotlindemo.ui.activity
 
 import android.content.Context
 import android.content.Intent
+import android.view.Menu
+import android.view.MenuItem
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.StringUtils
+import com.example.kotlindemo.Page
 import com.example.kotlindemo.R
 import com.example.kotlindemo.adaper.MyShareAdapter
 import com.example.kotlindemo.base.BaseActivity
@@ -154,5 +157,19 @@ class MyShareActivity : BaseActivity<MyShareContract.IMyShareView, MySharePresen
         if (success) {
             showToast(StringUtils.getString(R.string.cancel_collect_success))
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_add, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_add -> {
+                CommonActivity.start(this, Page.SHARE_ARTICLE)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
