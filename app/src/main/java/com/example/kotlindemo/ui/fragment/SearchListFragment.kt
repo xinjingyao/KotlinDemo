@@ -92,7 +92,7 @@ class SearchListFragment : BaseFragment<SearchListContract.ISearchListView, Sear
                 //  点击item
                 if (datas.isEmpty()) return@setOnItemClickListener
                 val article = datas[position]
-                ContentActivity.start(context, article.id, article.title, article.link)
+                ContentActivity.start(context, article.id, article.title, article.link, article.collect)
             }
             setOnItemChildClickListener { adapter, view, position ->
                 //  点击item的某一项

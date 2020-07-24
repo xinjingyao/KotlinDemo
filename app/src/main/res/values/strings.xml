@@ -84,6 +84,7 @@
 
     <!-- Collect -->
     <string name="collect">收藏</string>
+    <string name="uncollect">取消收藏</string>
     <string name="anonymous">匿名</string>
 
     <!--search-->

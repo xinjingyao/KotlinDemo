@@ -6,17 +6,15 @@ import android.os.SystemClock
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.FragmentTransaction
-import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.BusUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.StringUtils
-import com.example.kotlindemo.EVENT_SET_USER_INFO
+import com.example.kotlindemo.Event
 import com.example.kotlindemo.Page
 import com.example.kotlindemo.R
 import com.example.kotlindemo.base.BaseActivity
@@ -31,7 +29,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
-import java.util.zip.Inflater
 
 class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), MainContract.IMainView {
 
@@ -272,7 +269,7 @@ class MainActivity : BaseActivity<MainContract.IMainView, MainPresenter>(), Main
         mProjectFragment?.let { transaction.hide(it) }
     }
 
-    @BusUtils.Bus(tag = EVENT_SET_USER_INFO, threadMode = BusUtils.ThreadMode.MAIN)
+    @BusUtils.Bus(tag = Event.SET_USER_INFO, threadMode = BusUtils.ThreadMode.MAIN)
     fun receiveUserInfo(userInfo: UserInfo?) {
         LogUtils.d("--receiveUserInfo")
         this.userInfo = userInfo

@@ -5,8 +5,10 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.bingoogolapple.bgabanner.BGABanner
+import com.blankj.utilcode.util.BusUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.StringUtils
+import com.example.kotlindemo.Event
 import com.example.kotlindemo.adaper.HomeAdapter
 import com.example.kotlindemo.R
 import com.example.kotlindemo.base.BaseFragment
@@ -44,6 +46,7 @@ class HomeFragment : BaseFragment<HomeContract.IHomeView, HomePresenter>(), Home
     override fun createPresenter(): HomePresenter = HomePresenter()
 
     override fun initView() {
+        BusUtils.register(this)
         initSwipeRefreshLayout()
         initBanner()
         initRecyclerView()
@@ -111,7 +114,7 @@ class HomeFragment : BaseFragment<HomeContract.IHomeView, HomePresenter>(), Home
                 //  点击item
                 if (datas.isEmpty()) return@setOnItemClickListener
                 val article = datas[position]
-                ContentActivity.start(context, article.id, article.title, article.link)
+                ContentActivity.start(context, article.id, article.title, article.link, article.collect)
             }
             setOnItemChildClickListener { adapter, view, position ->
                 //  点击item的某一项
@@ -184,5 +187,22 @@ class HomeFragment : BaseFragment<HomeContract.IHomeView, HomePresenter>(), Home
         super.showError(msg)
         swipeRefreshLayout.isRefreshing = false
         LogUtils.d("---git")
+    }
+
+    /**
+     * 收藏和取消收藏先暂时这样处理
+     */
+    @BusUtils.Bus(tag = Event.COLLECT, threadMode = BusUtils.ThreadMode.MAIN)
+    fun receiveCollect() {
+        mPresenter?.getHomeData()
+    }
+    @BusUtils.Bus(tag = Event.UNCOLLECT, threadMode = BusUtils.ThreadMode.MAIN)
+    fun receiveUnCollect() {
+        mPresenter?.getHomeData()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        BusUtils.unregister(this)
     }
 }

@@ -13,7 +13,9 @@ import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.webkit.WebSettings
 import android.webkit.WebView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import com.blankj.utilcode.util.BusUtils
 import com.blankj.utilcode.util.ColorUtils
+import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.StringUtils
 import com.example.kotlindemo.*
 import com.example.kotlindemo.base.BaseActivity
@@ -35,13 +37,22 @@ class ContentActivity : BaseActivity<EmptyContract.IEmptyView, EmptyPresenter>()
     private var articleId: Int = -1
     private var articleTitle: String = ""
     private var articleUrl: String = ""
+    private var isCollect = false
 
     companion object {
-        fun start(context: Context?, id: Int, title: String, url: String, bundle: Bundle? = null) {
+        fun start(
+            context: Context?,
+            id: Int,
+            title: String,
+            url: String,
+            isCollect: Boolean? = false,
+            bundle: Bundle? = null
+        ) {
             Intent(context, ContentActivity::class.java).run {
                 putExtra(ARTICLE_ID, id)
                 putExtra(ARTICLE_TITLE, title)
                 putExtra(ARTICLE_URL, url)
+                putExtra(ARTICLE_COLLECT, isCollect)
                 context?.startActivity(this, bundle)
             }
         }
@@ -58,10 +69,12 @@ class ContentActivity : BaseActivity<EmptyContract.IEmptyView, EmptyPresenter>()
 
     override fun initView() {
         super.initView()
+        LogUtils.d("--initView")
         intent.extras?.let {
             articleId = it.getInt(ARTICLE_ID, -1)
             articleTitle = it.getString(ARTICLE_TITLE, "")
             articleUrl = it.getString(ARTICLE_URL, "")
+            isCollect = it.getBoolean(ARTICLE_COLLECT)
         }
         initToolbar()
         initWebView()
@@ -126,7 +139,10 @@ class ContentActivity : BaseActivity<EmptyContract.IEmptyView, EmptyPresenter>()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        LogUtils.d("--onCreateOptionsMenu")
         menuInflater.inflate(R.menu.menu_toolbar, menu)
+        val item = menu?.getItem(1)
+        item?.title = if (isCollect) StringUtils.getString(R.string.uncollect) else StringUtils.getString(R.string.collect)
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -142,11 +158,23 @@ class ContentActivity : BaseActivity<EmptyContract.IEmptyView, EmptyPresenter>()
                         )
                     )
                     type = CONTENT_SHARE_TYPE
-                    startActivity(Intent.createChooser(this, StringUtils.getString(R.string.action_share)))
+                    startActivity(
+                        Intent.createChooser(
+                            this,
+                            StringUtils.getString(R.string.action_share)
+                        )
+                    )
                 }
             }
             R.id.action_collect -> {
-                mPresenter?.collectArticle(articleId)
+                item.title =
+                    if (StringUtils.equals(StringUtils.getString(R.string.collect), item.title)) {
+                        mPresenter?.collectArticle(articleId)
+                        StringUtils.getString(R.string.uncollect)
+                    } else {
+                        mPresenter?.cancelCollectArticle(articleId)
+                        StringUtils.getString(R.string.collect)
+                    }
             }
             R.id.action_browser -> {
                 Intent().run {
@@ -162,14 +190,19 @@ class ContentActivity : BaseActivity<EmptyContract.IEmptyView, EmptyPresenter>()
     override fun showCollectResult(success: Boolean) {
         if (success) {
             showToast(StringUtils.getString(R.string.collect_success))
-            // TODO: 2020/7/5  刷新主页收藏状态
+            // 2020/7/5  刷新主页收藏状态
+            BusUtils.post(Event.COLLECT)
         } else {
             showToast(StringUtils.getString(R.string.collect_failed))
         }
     }
 
     override fun showCancelCollectResult(success: Boolean) {
-
+        if (success) {
+            showToast(StringUtils.getString(R.string.cancel_collect_success))
+            // 2020/7/5  刷新主页收藏状态
+            BusUtils.post(Event.UNCOLLECT)
+        }
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {

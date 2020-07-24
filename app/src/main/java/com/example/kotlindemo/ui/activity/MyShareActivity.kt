@@ -112,7 +112,8 @@ class MyShareActivity : BaseActivity<MyShareContract.IMyShareView, MySharePresen
                                 this@MyShareActivity,
                                 data.id,
                                 data.title,
-                                data.link
+                                data.link,
+                                data.collect
                             )
                         }
                     }

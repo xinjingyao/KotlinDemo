@@ -49,7 +49,8 @@ class NavAdapter(datas: MutableList<NavBean>) :
                     context,
                     item.articles[i].id,
                     item.articles[i].title,
-                    item.articles[i].link
+                    item.articles[i].link,
+                    item.articles[i].collect
                 )
             }
         }
