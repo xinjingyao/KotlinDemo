@@ -77,7 +77,7 @@ class CollectFragment : BaseFragment<CollectContract.ICollectView, CollectPresen
                 if (datas.isEmpty()) return@setOnItemClickListener
                 val article = datas[position]
                 LogUtils.d("item position=${position}")
-                ContentActivity.start(context, article.id, article.title, article.link)
+                ContentActivity.start(context, article.id, article.title, article.link, true)
             }
             setOnItemChildClickListener { adapter, view, position ->
                 //  点击item的某一项
